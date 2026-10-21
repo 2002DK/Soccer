@@ -119,28 +119,22 @@ def league_positions(matches: pd.DataFrame) -> pd.DataFrame:
     Matches on the same date are treated as simultaneous, so a team's position
     never includes results from its own matchday.
     """
-    rows = []
-    for season, games in matches.groupby("season"):
-        played = games.dropna(subset=["home_goals"])
-        teams = sorted(set(games["home_team"]) | set(games["away_team"]))
-        for date in sorted(games["date"].unique()):
-            before = played[played["date"] < date]
-            if before.empty:
-                continue  # first matchday: everyone level, position is meaningless
-            table = pd.DataFrame(index=teams, data={"pts": 0, "gd": 0, "gf": 0})
-            for team_col, gf_col, ga_col in [
-                ("home_team", "home_goals", "away_goals"),
-                ("away_team", "away_goals", "home_goals"),
-            ]:
-                gf, ga = before[gf_col].astype(int), before[ga_col].astype(int)
-                pts = np.select([gf > ga, gf == ga], [3, 1], default=0)
-                agg = pd.DataFrame({"team": before[team_col], "pts": pts, "gd": gf - ga, "gf": gf}).groupby("team").sum()
-                table = table.add(agg, fill_value=0)
-            # Same tie-breakers as the Premier League: points, goal difference, goals scored
-            table = table.sort_values(["pts", "gd", "gf"], ascending=False)
-            for pos, team in enumerate(table.index, start=1):
-                rows.append((season, date, team, pos))
-    return pd.DataFrame(rows, columns=["season", "date", "team", "season_position"])
+    long = to_long(matches)
+    long["gd"] = long["gf"] - long["ga"]
+    frames = []
+    for season, games in long.groupby("season"):
+        # Running totals per team: one row per matchday, shifted so each row is the table before that day
+        totals = {
+            stat: games.pivot_table(index="date", columns="team", values=stat, aggfunc="sum")
+            .fillna(0).cumsum().shift(1)
+            for stat in ["pts", "gd", "gf"]
+        }
+        # Same tie-breakers as the Premier League: points, goal difference, goals scored.
+        # One sortable number per team; remaining ties go alphabetically.
+        key = totals["pts"] * 1e6 + (totals["gd"] + 500) * 1e3 + totals["gf"]
+        position = key.rank(axis=1, ascending=False, method="first").iloc[1:]  # skip first matchday: all level
+        frames.append(position.stack().rename("season_position").reset_index().assign(season=season))
+    return pd.concat(frames, ignore_index=True)[["season", "date", "team", "season_position"]]
 
 
 def h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
