@@ -24,9 +24,13 @@ class Predictor:
         self.labels = bundle["labels"]
 
         self.matches = pd.read_csv(matches_path, parse_dates=["date"])
+        self.last_played = self.matches["date"].max().date()
         self.season = self.matches["season"].max()
         current = self.matches[self.matches["season"] == self.season]
         self.teams = sorted(set(current["home_team"]) | set(current["away_team"]))
+
+    def default_date(self) -> Date:
+        return self.last_played + timedelta(days=1)
 
     def feature_row(self, home_team: str, away_team: str, on: Date | None = None) -> pd.Series:
         """Features for home_team v away_team, as of `on` (default: the day after the last played match)."""
@@ -36,10 +40,9 @@ class Predictor:
         if home_team == away_team:
             raise ValueError("home and away team must be different")
 
-        last_played = self.matches["date"].max().date()
-        on = on or last_played + timedelta(days=1)
-        if on <= last_played:
-            raise ValueError(f"date must be after the last played match ({last_played})")
+        on = on or self.default_date()
+        if on <= self.last_played:
+            raise ValueError(f"date must be after the last played match ({self.last_played})")
 
         fixture = pd.DataFrame([{"season": self.season, "date": on, "home_team": home_team, "away_team": away_team}])
         return build_features(self.matches, fixture).iloc[-1]
