@@ -1,0 +1,273 @@
+{
+  "labels": [
+    "H",
+    "D",
+    "A"
+  ],
+  "results": [
+    {
+      "model": "Logistic Regression",
+      "feature_set": "base",
+      "train_seasons": "2006-07 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 6840,
+      "n_test": 830,
+      "best_params": {
+        "logisticregression__C": 0.003
+      },
+      "cv_log_loss": 0.9884297378097487,
+      "accuracy": 0.5096385542168674,
+      "f1_macro": 0.38250904557507925,
+      "precision_macro": 0.33878805018510905,
+      "recall_macro": 0.44866969500324466,
+      "log_loss": 1.0157918841623566,
+      "predicted_share": {
+        "H": 0.655421686746988,
+        "D": 0.0,
+        "A": 0.344578313253012
+      },
+      "confusion_matrix": [
+        [
+          279,
+          0,
+          66
+        ],
+        [
+          141,
+          0,
+          76
+        ],
+        [
+          124,
+          0,
+          144
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.084142261767224
+      }
+    },
+    {
+      "model": "Random Forest",
+      "feature_set": "base",
+      "train_seasons": "2006-07 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 6840,
+      "n_test": 830,
+      "best_params": {
+        "randomforestclassifier__max_depth": 6,
+        "randomforestclassifier__min_samples_leaf": 50
+      },
+      "cv_log_loss": 0.9907484396899594,
+      "accuracy": 0.5012048192771085,
+      "f1_macro": 0.37256647013015903,
+      "precision_macro": 0.332600117314563,
+      "recall_macro": 0.43829764222366424,
+      "log_loss": 1.022969459278867,
+      "predicted_share": {
+        "H": 0.6795180722891566,
+        "D": 0.0,
+        "A": 0.3204819277108434
+      },
+      "confusion_matrix": [
+        [
+          285,
+          0,
+          60
+        ],
+        [
+          142,
+          0,
+          75
+        ],
+        [
+          137,
+          0,
+          131
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.084142261767224
+      }
+    },
+    {
+      "model": "XGBoost",
+      "feature_set": "base",
+      "train_seasons": "2006-07 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 6840,
+      "n_test": 830,
+      "best_params": {
+        "learning_rate": 0.01,
+        "max_depth": 2,
+        "n_estimators": 400
+      },
+      "cv_log_loss": 0.9909163475036621,
+      "accuracy": 0.4951807228915663,
+      "f1_macro": 0.3684667994254374,
+      "precision_macro": 0.32649012222807666,
+      "recall_macro": 0.4337443218689163,
+      "log_loss": 1.022189974784851,
+      "predicted_share": {
+        "H": 0.6638554216867469,
+        "D": 0.0,
+        "A": 0.336144578313253
+      },
+      "confusion_matrix": [
+        [
+          279,
+          0,
+          66
+        ],
+        [
+          136,
+          0,
+          81
+        ],
+        [
+          136,
+          0,
+          132
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.084142261767224
+      }
+    },
+    {
+      "model": "Logistic Regression",
+      "feature_set": "xg",
+      "train_seasons": "2014-15 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 3800,
+      "n_test": 830,
+      "best_params": {
+        "logisticregression__C": 0.003
+      },
+      "cv_log_loss": 0.9790968067266391,
+      "accuracy": 0.5084337349397591,
+      "f1_macro": 0.3821900447608262,
+      "precision_macro": 0.33767038413878564,
+      "recall_macro": 0.44825870646766175,
+      "log_loss": 1.0191587123441872,
+      "predicted_share": {
+        "H": 0.6481927710843374,
+        "D": 0.0,
+        "A": 0.35180722891566263
+      },
+      "confusion_matrix": [
+        [
+          276,
+          0,
+          69
+        ],
+        [
+          140,
+          0,
+          77
+        ],
+        [
+          122,
+          0,
+          146
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.083651682407861
+      }
+    },
+    {
+      "model": "Random Forest",
+      "feature_set": "xg",
+      "train_seasons": "2014-15 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 3800,
+      "n_test": 830,
+      "best_params": {
+        "randomforestclassifier__max_depth": 6,
+        "randomforestclassifier__min_samples_leaf": 50
+      },
+      "cv_log_loss": 0.9810269040395345,
+      "accuracy": 0.5096385542168674,
+      "f1_macro": 0.3810426115410162,
+      "precision_macro": 0.33790111212665325,
+      "recall_macro": 0.44755930492465207,
+      "log_loss": 1.021861393614384,
+      "predicted_share": {
+        "H": 0.6614457831325301,
+        "D": 0.0,
+        "A": 0.3385542168674699
+      },
+      "confusion_matrix": [
+        [
+          283,
+          0,
+          62
+        ],
+        [
+          138,
+          0,
+          79
+        ],
+        [
+          128,
+          0,
+          140
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.083651682407861
+      }
+    },
+    {
+      "model": "XGBoost",
+      "feature_set": "xg",
+      "train_seasons": "2014-15 to season before 2024-25",
+      "test_seasons": "2024-25 onwards",
+      "n_train": 3800,
+      "n_test": 830,
+      "best_params": {
+        "learning_rate": 0.01,
+        "max_depth": 2,
+        "n_estimators": 400
+      },
+      "cv_log_loss": 0.9844425201416016,
+      "accuracy": 0.5060240963855421,
+      "f1_macro": 0.37844547409913104,
+      "precision_macro": 0.3347387906211436,
+      "recall_macro": 0.44466075420001444,
+      "log_loss": 1.0212774276733398,
+      "predicted_share": {
+        "H": 0.655421686746988,
+        "D": 0.0,
+        "A": 0.344578313253012
+      },
+      "confusion_matrix": [
+        [
+          280,
+          0,
+          65
+        ],
+        [
+          136,
+          0,
+          81
+        ],
+        [
+          128,
+          0,
+          140
+        ]
+      ],
+      "baseline": {
+        "always_home_accuracy": 0.41566265060240964,
+        "class_prior_log_loss": 1.083651682407861
+      }
+    }
+  ]
+}
