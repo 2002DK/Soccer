@@ -35,7 +35,7 @@ jobs:
       - run: npm run build
         env:
           # Set a repository variable named API_URL to override (Settings > Secrets and variables > Actions > Variables)
-          VITE_API_URL: ${{ vars.API_URL || 'https://pl-predictor-api.onrender.com' }}
+          VITE_API_URL: ${{ vars.API_URL || 'https://pl-predictor-api-obu5.onrender.com' }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist
