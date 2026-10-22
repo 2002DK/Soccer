@@ -8,12 +8,15 @@ Team names are football-data.co.uk's (e.g. "Man City", "Nott'm Forest").
 
 import argparse
 from datetime import date as Date, timedelta
+from pathlib import Path
 
 import joblib
 import pandas as pd
 
 from build_features import MATCHES_PATH, build_features
-from save_model import MODEL_PATH
+
+# Defined here, not imported from save_model, so serving needs no training libraries (e.g. XGBoost)
+MODEL_PATH = Path(__file__).resolve().parents[1] / "models" / "model.pkl"
 
 
 class Predictor:

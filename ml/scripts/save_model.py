@@ -17,12 +17,12 @@ import joblib
 import pandas as pd
 from sklearn.base import clone
 
+from predict import MODEL_PATH
 from train_models import FEATURE_SETS, FEATURES_PATH, LABELS, METRICS_PATH, MODELS, ML_DIR, feature_columns
 
 MODEL_NAME = "Logistic Regression"
 FEATURE_SET = "base"
 
-MODEL_PATH = ML_DIR / "models" / "model.pkl"
 META_PATH = ML_DIR / "models" / "model_meta.json"
 
 

@@ -1,3 +1,9 @@
--r ../ml/requirements.txt
+# Serving only needs part of ml/requirements.txt (no XGBoost or requests).
+# Keep these versions in step with ml/requirements.txt: model.pkl must load
+# with the scikit-learn version that saved it.
+pandas==3.0.6
+numpy==2.5.4
+scikit-learn==1.9.1
+joblib==1.6.0
 fastapi==0.158.2
 uvicorn[standard]==0.54.0

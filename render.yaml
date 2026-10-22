@@ -1,0 +1,24 @@
+# Render Blueprint for the FastAPI backend.
+# In Render: New > Blueprint, pick this repository; Render reads this file.
+services:
+  - type: web
+    name: pl-predictor-api
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    # Redeploy only when something the API uses changes
+    buildFilter:
+      paths:
+        - backend/**
+        - ml/scripts/**
+        - ml/models/**
+        - ml/data/processed/**
+        - render.yaml
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.6
+      - key: ALLOWED_ORIGINS
+        value: https://2002dk.github.io
