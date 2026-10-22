@@ -6,6 +6,7 @@ current season, which is always re-downloaded because it is still being played.
 """
 
 import argparse
+from datetime import date
 from pathlib import Path
 
 import requests
@@ -14,7 +15,15 @@ BASE_URL = "https://www.football-data.co.uk/mmz4281/{code}/E0.csv"
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 
 FIRST_SEASON = 2005  # 2005-06
-CURRENT_SEASON = 2026  # 2026-27
+
+
+def current_season(today: date | None = None) -> int:
+    """Start year of the latest season: from August, the season starting that year."""
+    today = today or date.today()
+    return today.year if today.month >= 8 else today.year - 1
+
+
+CURRENT_SEASON = current_season()
 
 
 def season_code(start_year: int) -> str:
@@ -22,7 +31,7 @@ def season_code(start_year: int) -> str:
     return f"{start_year % 100:02d}{(start_year + 1) % 100:02d}"
 
 
-def download_season(start_year: int, force: bool = False) -> Path:
+def download_season(start_year: int, force: bool = False) -> Path | None:
     code = season_code(start_year)
     dest = RAW_DIR / f"E0_{code}.csv"
     if dest.exists() and not force and start_year != CURRENT_SEASON:
@@ -30,6 +39,10 @@ def download_season(start_year: int, force: bool = False) -> Path:
         return dest
 
     resp = requests.get(BASE_URL.format(code=code), timeout=30)
+    if resp.status_code == 404 and start_year == CURRENT_SEASON:
+        # Early August: the new season's file appears once its first matches are played
+        print(f"skip  {code} (not published yet)")
+        return None
     resp.raise_for_status()
     dest.write_bytes(resp.content)
     print(f"saved {code} ({len(resp.content) / 1024:.0f} KB)")

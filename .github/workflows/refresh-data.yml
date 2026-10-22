@@ -1,0 +1,75 @@
+name: Weekly data refresh
+
+# Downloads the latest results, rebuilds features, refits the production model
+# and pushes the result. Render redeploys the API when these files change.
+# The model keeps the hyperparameters chosen in Phase 3 (ml/models/metrics.json);
+# the model comparison is not re-run.
+
+on:
+  schedule:
+    - cron: "0 6 * * 2" # Tuesdays 06:00 UTC, after weekend and Monday matches
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: |
+            ml/requirements.txt
+            backend/requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r ml/requirements.txt -r backend/requirements-dev.txt
+
+      - name: Download results and xG
+        run: |
+          python ml/scripts/download_data.py
+          python ml/scripts/download_xg.py
+
+      - name: Rebuild match table
+        run: python ml/scripts/clean_data.py
+
+      - name: Check for new matches
+        id: changes
+        run: |
+          if git diff --quiet -- ml/data/processed/matches.csv; then
+            echo "No new matches since the last refresh."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff --numstat -- ml/data/processed/matches.csv
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild features and refit model
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          python ml/scripts/build_features.py
+          python ml/scripts/save_model.py
+
+      - name: Test the API against the new data
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: backend
+        run: python -m pytest -q
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          last=$(python -c "import pandas as pd; print(pd.read_csv('ml/data/processed/matches.csv')['date'].max())")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ml/data/processed ml/models
+          git commit -m "Refresh data: results up to $last"
+          git push
