@@ -16,17 +16,18 @@ from datetime import date as Date, timedelta
 import joblib
 import pandas as pd
 
-from build_features import build_features
+import numpy as np
+
+from build_features import build_league_features
 from leagues import League, add_league_argument
 
 
 class Predictor:
     def __init__(self, league: League):
         self.league = league
-        bundle = joblib.load(league.model_path)
-        self.model = bundle["model"]
-        self.features = bundle["features"]
-        self.labels = bundle["labels"]
+        self.bundle = joblib.load(league.model_path)
+        self.features = self.bundle["features"]
+        self.labels = self.bundle["labels"]
 
         self.matches = pd.read_csv(league.matches_path, parse_dates=["date"])
         self.last_played = self.matches["date"].max().date()
@@ -50,13 +51,24 @@ class Predictor:
             raise ValueError(f"date must be after the last played match ({self.last_played})")
 
         fixture = pd.DataFrame([{"season": self.season, "date": on, "home_team": home_team, "away_team": away_team}])
-        return build_features(self.matches, fixture).iloc[-1]
+        return build_league_features(self.league, self.matches, fixture).iloc[-1]
 
     def predict(self, home_team: str, away_team: str, on: Date | None = None) -> dict[str, float]:
         """Probability of each outcome: {"H": ..., "D": ..., "A": ...}."""
         row = self.feature_row(home_team, away_team, on)
         X = row[self.features].to_frame().T.astype(float)
-        proba = self.model.predict_proba(X)[0]
+        b = self.bundle
+        if b.get("version") == 2:
+            # V2: Logistic Regression and/or Dixon-Coles, blended, then the optional calibration step
+            proba = np.zeros(3)
+            if b["lr"] is not None:
+                proba += b["lr_weight"] * b["lr"].predict_proba(X)[0]
+            if b["dc"] is not None:
+                proba += (1 - b["lr_weight"]) * b["dc"].outcome_probs(home_team, away_team)
+            if b["calibrator"] is not None:
+                proba = b["calibrator"].predict_proba(np.log(np.clip(proba, 1e-6, 1))[None, :])[0]
+        else:
+            proba = b["model"].predict_proba(X)[0]
         return dict(zip(self.labels, proba.round(4).tolist()))
 
 

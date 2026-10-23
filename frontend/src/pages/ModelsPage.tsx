@@ -4,8 +4,7 @@ import { ErrorMessage, Loading } from '../components/Status'
 import { pct } from '../format'
 import { useLoad } from '../hooks'
 
-const FEATURE_SET_NAME = { base: 'Without xG', xg: 'With xG' }
-const MODEL_ORDER = ['Logistic Regression', 'Random Forest', 'XGBoost']
+const FEATURE_SET_NAME = { base: 'V1, without xG', xg: 'V1, with xG', v2: 'V2' }
 const OUTCOMES = ['Home win', 'Draw', 'Away win']
 
 export function ModelsPage() {
@@ -23,16 +22,18 @@ function ModelsReport({ data }: { data: ModelsResponse }) {
   const chosen = comparison.find(isProduction)!
   const best = Math.max(...comparison.map((r) => r.accuracy))
   const worst = Math.min(...comparison.map((r) => r.accuracy))
+  const lowestLogLoss = Math.min(...comparison.map((r) => r.log_loss))
+  const neverDraws = comparison.every((r) => r.predicted_share.D === 0)
 
   return (
     <>
       <section className="intro">
         <h1>How the models compare</h1>
         <p>
-          Three models were each trained twice, with and without xG, and tested on {first.n_test} matches from{' '}
-          {first.test_seasons} that none of them saw during training. All six land between {pct(worst, 1)} and{' '}
-          {pct(best, 1)} accuracy, about 9 points better than always picking the home team (
-          {pct(first.baseline.always_home_accuracy, 1)}).
+          {comparison.length} models and feature sets were tested on {first.n_test} matches from{' '}
+          {first.test_seasons} that none of them saw during training. All land between {pct(worst, 1)} and{' '}
+          {pct(best, 1)} accuracy, against {pct(first.baseline.always_home_accuracy, 1)} for always picking the home
+          team.
         </p>
       </section>
 
@@ -79,24 +80,29 @@ function ModelsReport({ data }: { data: ModelsResponse }) {
         <p className="footnote">
           Sorted by log loss, which scores the probabilities themselves (lower is better). Precision, recall and F1
           are averaged over the three outcomes. "With xG" models train on 2014-15 onwards, when xG data starts;
-          the others on 2006-07 onwards.
+          the others on 2006-07 onwards. V2 adds Elo ratings, the Dixon-Coles scoreline model and blends of the
+          two.
         </p>
       </section>
 
       <section className="card">
         <h2>Why {production.model}?</h2>
         <p>
-          It ties for the best accuracy and has the lowest log loss, so its probabilities are the most
-          trustworthy, and those are what the predictor shows. It is now trained on all{' '}
-          {production.trained_on.matches.toLocaleString()} matches since {production.trained_on.first_season} using{' '}
-          {production.n_features} features.
+          {production.description ?? production.model}.{' '}
+          {chosen.log_loss === lowestLogLoss ? 'It has the lowest log loss of all the models' : `Its log loss is ${chosen.log_loss.toFixed(4)}`},
+          so its probabilities are the most trustworthy, and those are what the predictor shows. Its accuracy is{' '}
+          {pct(chosen.accuracy, 1)}: accuracy only counts whether the single most likely result happened, so
+          models within a point or two of each other are effectively tied. It is now trained on all{' '}
+          {production.trained_on.matches.toLocaleString()} matches since {production.trained_on.first_season}.
         </p>
         <h3>Predicted vs actual results</h3>
         <ConfusionMatrix matrix={chosen.confusion_matrix} />
-        <p className="footnote">
-          No model ever picks a draw: a draw is rarely the single most likely result, even when it has a 25–30%
-          chance. That keeps F1 near 0.38, but the predictor still shows each draw probability.
-        </p>
+        {neverDraws && (
+          <p className="footnote">
+            No model ever picks a draw: a draw is rarely the single most likely result, even when it has a 25–30%
+            chance. That keeps F1 below 0.39, but the predictor still shows each draw probability.
+          </p>
+        )}
       </section>
     </>
   )
@@ -110,17 +116,18 @@ const toX = (v: number) => `${((v - AXIS_MIN) / (AXIS_MAX - AXIS_MIN)) * 100}%`
 function AccuracyChart({ results, isProduction }: { results: ModelResult[]; isProduction: (r: ModelResult) => boolean }) {
   const [hovered, setHovered] = useState<ModelResult | null>(null)
   const baseline = results[0].baseline.always_home_accuracy
+  const models = [...new Set(results.map((r) => r.model))]
+  const sets = [...new Set(results.map((r) => r.feature_set))]
 
   return (
     <div className="dotplot">
       <ul className="legend" aria-hidden="true">
-        <li><span className="dot dot-base" /> Without xG</li>
-        <li><span className="dot dot-xg" /> With xG</li>
+        {sets.map((s) => <li key={s}><span className={`dot dot-${s}`} /> {FEATURE_SET_NAME[s]}</li>)}
         <li><span className="legend-baseline" /> Always pick home</li>
       </ul>
 
       <div className="dotplot-body">
-        {MODEL_ORDER.map((model) => (
+        {models.map((model) => (
           <div className="dotplot-row" key={model}>
             <div className="dotplot-label">{model}</div>
             <div className="dotplot-track">

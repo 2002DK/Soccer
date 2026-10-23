@@ -16,6 +16,12 @@ home-minus-away difference):
 - season_*: season-to-date points and goal difference per game, and league
   position before the matchday
 - h2h_*: last 5 meetings between the two teams, from the home side's view
+
+Added in V2 (V2_COLUMNS; the V1 feature sets leave them out):
+- home_elo, away_elo, diff_elo: Elo ratings before the match (elo.py)
+- league_home_rate: share of home wins in the league's previous 380 matches,
+  so the model can follow drifts in home advantage
+- no_crowd: 1 for matches played without crowds during COVID-19
 """
 
 import argparse
@@ -23,9 +29,12 @@ import argparse
 import numpy as np
 import pandas as pd
 
+from elo import EloParams, load_params, pre_match_ratings
 from leagues import League, add_league_argument
 
 WINDOW = 5
+HOME_RATE_WINDOW = 380  # one 20-team season
+V2_COLUMNS = ["home_elo", "away_elo", "diff_elo", "league_home_rate", "no_crowd"]
 
 # Per-team stats from that team's point of view: (home column, away column)
 TEAM_STATS = {
@@ -162,11 +171,28 @@ def h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
     })
 
 
-def build_features(matches: pd.DataFrame, fixtures: pd.DataFrame | None = None) -> pd.DataFrame:
+def league_home_rate(matches: pd.DataFrame) -> pd.DataFrame:
+    """Share of home wins in the HOME_RATE_WINDOW played matches before each match's date."""
+    played = matches.dropna(subset=["home_goals"]).sort_values("date")
+    home_wins = np.concatenate([[0], np.cumsum((played["home_goals"] > played["away_goals"]).to_numpy())])
+    # Number of played matches strictly before each match's date (same-day results are not known yet)
+    n_before = np.searchsorted(played["date"].to_numpy(), matches["date"].to_numpy(), side="left")
+    n_window = np.minimum(n_before, HOME_RATE_WINDOW)
+    wins = home_wins[n_before] - home_wins[n_before - n_window]
+    rate = np.where(n_window > 0, wins / np.maximum(n_window, 1), np.nan)
+    return pd.DataFrame({"match_id": matches["match_id"], "league_home_rate": rate})
+
+
+def build_features(
+    matches: pd.DataFrame,
+    fixtures: pd.DataFrame | None = None,
+    elo_params: EloParams | None = None,
+    no_crowd: tuple[str, str] | None = None,
+) -> pd.DataFrame:
     """Feature rows for every match in `matches` and every unplayed match in `fixtures`.
 
     `fixtures` needs season, date, home_team and away_team, and must be dated
-    after the last played match.
+    after the last played match. Elo features are added when `elo_params` is given.
     """
     matches = matches.copy()
     matches["date"] = pd.to_datetime(matches["date"])
@@ -193,12 +219,28 @@ def build_features(matches: pd.DataFrame, fixtures: pd.DataFrame | None = None) 
         out[f"diff_{feat}"] = out[f"home_{feat}"] - out[f"away_{feat}"]
 
     out = out.merge(h2h_features(matches), on="match_id")
+
+    if elo_params is not None:
+        ratings = pre_match_ratings(matches, elo_params).assign(match_id=matches["match_id"].to_numpy())
+        out = out.merge(ratings, on="match_id")
+        out["diff_elo"] = out["home_elo"] - out["away_elo"]
+    out = out.merge(league_home_rate(matches), on="match_id")
+    if no_crowd is not None:
+        start, end = pd.Timestamp(no_crowd[0]), pd.Timestamp(no_crowd[1])
+        out["no_crowd"] = out["date"].between(start, end).astype(int)
+    else:
+        out["no_crowd"] = 0
     return out.sort_values("match_id").drop(columns="match_id").reset_index(drop=True)
+
+
+def build_league_features(league: League, matches: pd.DataFrame, fixtures: pd.DataFrame | None = None) -> pd.DataFrame:
+    """build_features with the league's saved Elo parameters and no-crowd dates."""
+    return build_features(matches, fixtures, elo_params=load_params(league), no_crowd=league.no_crowd)
 
 
 def run(league: League) -> None:
     matches = pd.read_csv(league.matches_path, parse_dates=["date"])
-    features = build_features(matches)
+    features = build_league_features(league, matches)
     features.to_csv(league.features_path, index=False, date_format="%Y-%m-%d", float_format="%.4f")
     print(f"wrote {len(features)} rows x {features.shape[1]} columns to {league.features_path}")
 

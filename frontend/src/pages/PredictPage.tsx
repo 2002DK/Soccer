@@ -52,7 +52,7 @@ export function PredictPage({ teams }: { teams: TeamsResponse }) {
               <h2>{headline(prediction.data)}</h2>
               <ProbabilityBar prediction={prediction.data} />
               <p className="footnote">
-                {prediction.data.model} trained on Premier League matches since 2006-07, using results up to{' '}
+                Model: {prediction.data.model}, trained on Premier League matches since 2006-07, using results up to{' '}
                 {longDate(teams.data_through)}.
               </p>
             </>

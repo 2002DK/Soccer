@@ -49,8 +49,7 @@ export interface Prediction {
 
 export interface ModelResult {
   model: string
-  feature_set: 'base' | 'xg'
-  n_train: number
+  feature_set: 'base' | 'xg' | 'v2'
   n_test: number
   test_seasons: string
   accuracy: number
@@ -66,7 +65,8 @@ export interface ModelResult {
 export interface ModelsResponse {
   production: {
     model: string
-    feature_set: 'base' | 'xg'
+    description?: string
+    feature_set: 'base' | 'xg' | 'v2'
     n_features: number
     trained_on: { matches: number; first_season: string; last_match: string }
   }

@@ -25,6 +25,8 @@ class League:
     understat_first_season: int = 2014  # Understat starts in 2014-15
     # Understat team name -> football-data.co.uk team name (names not listed are identical)
     understat_names: dict[str, str] = field(default_factory=dict)
+    # First and last date (inclusive) of matches played without crowds during COVID-19
+    no_crowd: tuple[str, str] | None = None
 
     def current_season(self, today: date | None = None) -> int:
         """Start year of the latest season: from August, the season starting that year."""
@@ -87,6 +89,8 @@ LEAGUES = {
                 "West Bromwich Albion": "West Brom",
                 "Wolverhampton Wanderers": "Wolves",
             },
+            # Restart in June 2020 to the end of 2020-21 (a few December 2020 games had up to 2,000 fans)
+            no_crowd=("2020-06-01", "2021-05-31"),
         ),
     ]
 }

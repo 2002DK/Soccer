@@ -31,6 +31,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBClassifier
 
+from build_features import V2_COLUMNS
 from leagues import League, add_league_argument
 
 ID_COLUMNS = ["season", "date", "home_team", "away_team", "result"]
@@ -64,7 +65,8 @@ def feature_sets(league: League) -> dict[str, str]:
 
 
 def feature_columns(df: pd.DataFrame, feature_set: str) -> list[str]:
-    cols = [c for c in df.columns if c not in ID_COLUMNS]
+    """V1 feature sets; the columns added in V2 are left out so V1 results stay reproducible."""
+    cols = [c for c in df.columns if c not in ID_COLUMNS and c not in V2_COLUMNS]
     if feature_set == "base":
         cols = [c for c in cols if "_xg_" not in c]
     return cols

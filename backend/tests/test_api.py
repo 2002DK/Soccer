@@ -69,5 +69,10 @@ def test_predict_rejects_bad_input(payload):
 
 def test_models():
     body = client.get("/models").json()
-    assert body["production"]["model"] == "Logistic Regression"
-    assert {r["model"] for r in body["comparison"]} == {"Logistic Regression", "Random Forest", "XGBoost"}
+    production = body["production"]
+    # The production model appears in the comparison list, so the Models page can show its scores
+    assert any(r["model"] == production["model"] and r["feature_set"] == production["feature_set"] for r in body["comparison"])
+    assert {"Logistic Regression", "Random Forest", "XGBoost"} <= {r["model"] for r in body["comparison"]}
+    if body["v2"]:
+        assert body["v2"]["production"]["model"] == production["model"]
+        assert all(r["calibration"] for r in body["v2"]["results"])

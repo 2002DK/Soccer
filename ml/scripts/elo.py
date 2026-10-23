@@ -68,7 +68,8 @@ def margin_multiplier(goal_diff: int) -> float:
 def compute_elo(matches: pd.DataFrame, params: EloParams) -> tuple[pd.DataFrame, dict[str, float]]:
     """Ratings before and after every match, and each team's latest rating.
 
-    `matches` must be sorted by date and hold played matches only.
+    `matches` must be sorted by date. Unplayed fixtures (no goals) get their
+    pre-match ratings and change nothing.
     """
     ratings: dict[str, float] = {}
     rows = []
@@ -80,6 +81,9 @@ def compute_elo(matches: pd.DataFrame, params: EloParams) -> tuple[pd.DataFrame,
 
         home, away = ratings[m.home_team], ratings[m.away_team]
         exp = expected_home(home, away, params.home_advantage)
+        if pd.isna(m.home_goals):
+            rows.append((home, away, home, away, exp, np.nan))
+            continue
         actual = 1.0 if m.home_goals > m.away_goals else 0.5 if m.home_goals == m.away_goals else 0.0
         change = params.k * margin_multiplier(m.home_goals - m.away_goals) * (actual - exp)
         ratings[m.home_team] = home + change
@@ -105,6 +109,17 @@ def _new_season(ratings: dict[str, float], games: pd.DataFrame, params: EloParam
 
     mean = float(np.mean(list(carried.values())))
     return {t: mean + params.carry * (r - mean) for t, r in carried.items()}
+
+
+def load_params(league: League) -> EloParams:
+    """The league's tuned parameters, saved by run()."""
+    return EloParams(**json.loads((league.model_dir / "elo.json").read_text())["params"])
+
+
+def pre_match_ratings(matches: pd.DataFrame, params: EloParams) -> pd.DataFrame:
+    """home_elo and away_elo before each match, aligned to `matches` (sorted by date)."""
+    elo, _ = compute_elo(matches, params)
+    return elo[["home_elo_pre", "away_elo_pre"]].set_axis(["home_elo", "away_elo"], axis=1)
 
 
 def outcome_index(matches: pd.DataFrame) -> np.ndarray:

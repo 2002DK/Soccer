@@ -19,6 +19,7 @@
   /* Feature-set series in the models chart */
   --series-base: #2a78d6;
   --series-xg: #eb6834;
+  --series-v2: #1baf7a;
 
   --good: #0ca30c;
   --bad: #d03b3b;
@@ -48,6 +49,7 @@
     --away: #d95926;
     --series-base: #3987e5;
     --series-xg: #d95926;
+    --series-v2: #199e70;
     --chosen: rgba(57, 135, 229, 0.12);
   }
 }
@@ -322,6 +324,7 @@ a { color: var(--accent); }
 }
 .dot-base { background: var(--series-base); }
 .dot-xg { background: var(--series-xg); }
+.dot-v2 { background: var(--series-v2); }
 
 .dotplot-row {
   display: grid;

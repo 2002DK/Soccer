@@ -8,7 +8,7 @@ Steps, in order:
 - clean:    combine seasons into matches.csv
 - elo:      tune and compute Elo ratings (elo.csv, ratings.csv, elo.json)
 - features: build features.csv
-- compare:  tune and score every candidate model (slow; not run by default)
+- compare:  tune and score every candidate model, V1 then V2 (slow; not run by default)
 - fit:      refit the production model on all seasons and save it
 
 compare needs a full training environment (XGBoost); the other steps also
@@ -39,8 +39,10 @@ def run_step(step: str, league) -> None:
     elif step == "features":
         build_features.run(league)
     elif step == "compare":
+        import models_v2
         import train_models  # imported only when needed: pulls in XGBoost
         train_models.run(league)
+        models_v2.run(league)  # adds the V2 results to the metrics train_models just wrote
     elif step == "fit":
         import save_model
         save_model.run(league)

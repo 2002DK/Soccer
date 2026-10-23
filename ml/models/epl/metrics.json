@@ -269,5 +269,1345 @@
         "class_prior_log_loss": 1.083651682407861
       }
     }
-  ]
+  ],
+  "v2": {
+    "settings": {
+      "lr_C": 0.003,
+      "lr_half_life_seasons": null,
+      "dc_half_life_days": 365,
+      "blend_lr_weight": 0.75,
+      "n_features": 42
+    },
+    "splits": {
+      "train": "2006-07 to 2021-22 (6080 matches)",
+      "valid": "2022-23 to 2023-24 (760 matches)",
+      "test": "2024-25 onwards (830 matches)"
+    },
+    "results": [
+      {
+        "model": "Elo only",
+        "calibrated": false,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.4975903614457831,
+        "f1_macro": 0.3697033026707697,
+        "precision_macro": 0.3295444485756272,
+        "recall_macro": 0.43512149397937844,
+        "log_loss": 1.0108950837718098,
+        "brier": 0.6073427524769427,
+        "predicted_share": {
+          "H": 0.6771084337349398,
+          "D": 0.0,
+          "A": 0.3228915662650602
+        },
+        "confusion_matrix": [
+          [
+            283,
+            0,
+            62
+          ],
+          [
+            141,
+            0,
+            76
+          ],
+          [
+            138,
+            0,
+            130
+          ]
+        ],
+        "home_calibration_max_gap": 0.08399999999999996,
+        "home_calibration_within_noise": false,
+        "mean_predicted": {
+          "H": 0.4587659567895006,
+          "D": 0.2435602800591772,
+          "A": 0.2976737631513222
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 76,
+            "predicted": 0.1417,
+            "actual": 0.1316,
+            "standard_error": 0.0388
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 105,
+            "predicted": 0.2479,
+            "actual": 0.2381,
+            "standard_error": 0.0416
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 139,
+            "predicted": 0.3521,
+            "actual": 0.3094,
+            "standard_error": 0.0392
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 160,
+            "predicted": 0.4466,
+            "actual": 0.4375,
+            "standard_error": 0.0392
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 146,
+            "predicted": 0.551,
+            "actual": 0.4863,
+            "standard_error": 0.0414
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 204,
+            "predicted": 0.7016,
+            "actual": 0.6176,
+            "standard_error": 0.034
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 107,
+            "predicted": 0.1694,
+            "actual": 0.243,
+            "standard_error": 0.0415
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 723,
+            "predicted": 0.2545,
+            "actual": 0.2642,
+            "standard_error": 0.0164
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 282,
+            "predicted": 0.1247,
+            "actual": 0.1525,
+            "standard_error": 0.0214
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 173,
+            "predicted": 0.2497,
+            "actual": 0.2775,
+            "standard_error": 0.034
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 165,
+            "predicted": 0.3465,
+            "actual": 0.4121,
+            "standard_error": 0.0383
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 90,
+            "predicted": 0.4489,
+            "actual": 0.4444,
+            "standard_error": 0.0524
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 72,
+            "predicted": 0.5405,
+            "actual": 0.5278,
+            "standard_error": 0.0588
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 48,
+            "predicted": 0.6711,
+            "actual": 0.6458,
+            "standard_error": 0.069
+          }
+        ]
+      },
+      {
+        "model": "Elo only",
+        "calibrated": true,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.4975903614457831,
+        "f1_macro": 0.3697033026707697,
+        "precision_macro": 0.3295444485756272,
+        "recall_macro": 0.43512149397937844,
+        "log_loss": 1.0155422230770104,
+        "brier": 0.6101006361568182,
+        "predicted_share": {
+          "H": 0.6771084337349398,
+          "D": 0.0,
+          "A": 0.3228915662650602
+        },
+        "confusion_matrix": [
+          [
+            283,
+            0,
+            62
+          ],
+          [
+            141,
+            0,
+            76
+          ],
+          [
+            138,
+            0,
+            130
+          ]
+        ],
+        "home_calibration_max_gap": 0.10899999999999999,
+        "home_calibration_within_noise": false,
+        "mean_predicted": {
+          "H": 0.47356351597488605,
+          "D": 0.22395010645228045,
+          "A": 0.3024863775728336
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 59,
+            "predicted": 0.1517,
+            "actual": 0.1186,
+            "standard_error": 0.0421
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 115,
+            "predicted": 0.2522,
+            "actual": 0.2261,
+            "standard_error": 0.039
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 135,
+            "predicted": 0.354,
+            "actual": 0.3111,
+            "standard_error": 0.0398
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 160,
+            "predicted": 0.4465,
+            "actual": 0.4313,
+            "standard_error": 0.0392
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 135,
+            "predicted": 0.55,
+            "actual": 0.4741,
+            "standard_error": 0.043
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 226,
+            "predicted": 0.7152,
+            "actual": 0.6062,
+            "standard_error": 0.0325
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 178,
+            "predicted": 0.1624,
+            "actual": 0.2303,
+            "standard_error": 0.0316
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 652,
+            "predicted": 0.2408,
+            "actual": 0.2699,
+            "standard_error": 0.0174
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 272,
+            "predicted": 0.1205,
+            "actual": 0.1507,
+            "standard_error": 0.0217
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 167,
+            "predicted": 0.2497,
+            "actual": 0.2635,
+            "standard_error": 0.0341
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 164,
+            "predicted": 0.3473,
+            "actual": 0.4146,
+            "standard_error": 0.0385
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 94,
+            "predicted": 0.4424,
+            "actual": 0.3936,
+            "standard_error": 0.0504
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 83,
+            "predicted": 0.5381,
+            "actual": 0.5422,
+            "standard_error": 0.0547
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 50,
+            "predicted": 0.6674,
+            "actual": 0.66,
+            "standard_error": 0.067
+          }
+        ]
+      },
+      {
+        "model": "Logistic Regression v2",
+        "calibrated": false,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.4939759036144578,
+        "f1_macro": 0.3692643016314514,
+        "precision_macro": 0.32690158042270717,
+        "recall_macro": 0.43388852837262964,
+        "log_loss": 1.0097947887478433,
+        "brier": 0.6057026453506198,
+        "predicted_share": {
+          "H": 0.6578313253012048,
+          "D": 0.0,
+          "A": 0.3421686746987952
+        },
+        "confusion_matrix": [
+          [
+            274,
+            0,
+            71
+          ],
+          [
+            140,
+            0,
+            77
+          ],
+          [
+            132,
+            0,
+            136
+          ]
+        ],
+        "home_calibration_max_gap": 0.0577,
+        "home_calibration_within_noise": true,
+        "mean_predicted": {
+          "H": 0.45312343206241396,
+          "D": 0.2364514345503113,
+          "A": 0.3104251333872746
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 57,
+            "predicted": 0.1454,
+            "actual": 0.0877,
+            "standard_error": 0.0375
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 117,
+            "predicted": 0.2508,
+            "actual": 0.1966,
+            "standard_error": 0.0367
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 169,
+            "predicted": 0.3512,
+            "actual": 0.3609,
+            "standard_error": 0.0369
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 159,
+            "predicted": 0.4511,
+            "actual": 0.4151,
+            "standard_error": 0.0391
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 137,
+            "predicted": 0.5453,
+            "actual": 0.4891,
+            "standard_error": 0.0427
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 191,
+            "predicted": 0.6946,
+            "actual": 0.644,
+            "standard_error": 0.0346
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 136,
+            "predicted": 0.17,
+            "actual": 0.2574,
+            "standard_error": 0.0375
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 671,
+            "predicted": 0.2473,
+            "actual": 0.2593,
+            "standard_error": 0.0169
+          },
+          {
+            "outcome": "D",
+            "band": "0.3-0.4",
+            "n": 23,
+            "predicted": 0.3124,
+            "actual": 0.3478,
+            "standard_error": 0.0993
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 238,
+            "predicted": 0.1313,
+            "actual": 0.1429,
+            "standard_error": 0.0227
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 191,
+            "predicted": 0.2508,
+            "actual": 0.267,
+            "standard_error": 0.032
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 163,
+            "predicted": 0.348,
+            "actual": 0.3865,
+            "standard_error": 0.0381
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 128,
+            "predicted": 0.4443,
+            "actual": 0.3906,
+            "standard_error": 0.0431
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 70,
+            "predicted": 0.5445,
+            "actual": 0.6,
+            "standard_error": 0.0586
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 40,
+            "predicted": 0.6696,
+            "actual": 0.7,
+            "standard_error": 0.0725
+          }
+        ]
+      },
+      {
+        "model": "Logistic Regression v2",
+        "calibrated": true,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.491566265060241,
+        "f1_macro": 0.3637057786077394,
+        "precision_macro": 0.32604242354278007,
+        "recall_macro": 0.42862499098709356,
+        "log_loss": 1.0199618577178953,
+        "brier": 0.6119138891179216,
+        "predicted_share": {
+          "H": 0.6903614457831325,
+          "D": 0.0,
+          "A": 0.3096385542168675
+        },
+        "confusion_matrix": [
+          [
+            284,
+            0,
+            61
+          ],
+          [
+            145,
+            0,
+            72
+          ],
+          [
+            144,
+            0,
+            124
+          ]
+        ],
+        "home_calibration_max_gap": 0.11499999999999999,
+        "home_calibration_within_noise": false,
+        "mean_predicted": {
+          "H": 0.48445677067135,
+          "D": 0.21684682599342378,
+          "A": 0.2986964033352263
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 49,
+            "predicted": 0.1456,
+            "actual": 0.0816,
+            "standard_error": 0.0391
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 109,
+            "predicted": 0.2521,
+            "actual": 0.1927,
+            "standard_error": 0.0378
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 140,
+            "predicted": 0.3547,
+            "actual": 0.3643,
+            "standard_error": 0.0407
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 151,
+            "predicted": 0.4504,
+            "actual": 0.3775,
+            "standard_error": 0.0394
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 147,
+            "predicted": 0.5504,
+            "actual": 0.4762,
+            "standard_error": 0.0412
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 234,
+            "predicted": 0.7218,
+            "actual": 0.6068,
+            "standard_error": 0.0319
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 214,
+            "predicted": 0.1626,
+            "actual": 0.243,
+            "standard_error": 0.0293
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 616,
+            "predicted": 0.2357,
+            "actual": 0.2679,
+            "standard_error": 0.0178
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 264,
+            "predicted": 0.1183,
+            "actual": 0.1402,
+            "standard_error": 0.0214
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 180,
+            "predicted": 0.248,
+            "actual": 0.2944,
+            "standard_error": 0.034
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 158,
+            "predicted": 0.3468,
+            "actual": 0.3797,
+            "standard_error": 0.0386
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 126,
+            "predicted": 0.4492,
+            "actual": 0.4365,
+            "standard_error": 0.0442
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 61,
+            "predicted": 0.5465,
+            "actual": 0.541,
+            "standard_error": 0.0638
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 41,
+            "predicted": 0.6659,
+            "actual": 0.7317,
+            "standard_error": 0.0692
+          }
+        ]
+      },
+      {
+        "model": "Dixon-Coles",
+        "calibrated": false,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.5048192771084338,
+        "f1_macro": 0.3819938498164865,
+        "precision_macro": 0.33396293475501393,
+        "recall_macro": 0.44841372845915356,
+        "log_loss": 1.0132791101550096,
+        "brier": 0.6042794370328367,
+        "predicted_share": {
+          "H": 0.608433734939759,
+          "D": 0.0,
+          "A": 0.39156626506024095
+        },
+        "confusion_matrix": [
+          [
+            262,
+            0,
+            83
+          ],
+          [
+            132,
+            0,
+            85
+          ],
+          [
+            111,
+            0,
+            157
+          ]
+        ],
+        "home_calibration_max_gap": 0.06180000000000002,
+        "home_calibration_within_noise": true,
+        "mean_predicted": {
+          "H": 0.42765259676483375,
+          "D": 0.23621839833406347,
+          "A": 0.33612900490110287
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 88,
+            "predicted": 0.1462,
+            "actual": 0.125,
+            "standard_error": 0.0353
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 113,
+            "predicted": 0.253,
+            "actual": 0.3009,
+            "standard_error": 0.0431
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 177,
+            "predicted": 0.3516,
+            "actual": 0.3559,
+            "standard_error": 0.036
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 186,
+            "predicted": 0.4489,
+            "actual": 0.3871,
+            "standard_error": 0.0357
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 114,
+            "predicted": 0.5441,
+            "actual": 0.5351,
+            "standard_error": 0.0467
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 152,
+            "predicted": 0.6957,
+            "actual": 0.6842,
+            "standard_error": 0.0377
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 137,
+            "predicted": 0.1658,
+            "actual": 0.1898,
+            "standard_error": 0.0335
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 658,
+            "predicted": 0.2464,
+            "actual": 0.2766,
+            "standard_error": 0.0174
+          },
+          {
+            "outcome": "D",
+            "band": "0.3-0.4",
+            "n": 34,
+            "predicted": 0.317,
+            "actual": 0.2353,
+            "standard_error": 0.0727
+          },
+          {
+            "outcome": "D",
+            "band": "0.4-0.5",
+            "n": 1,
+            "predicted": 0.4184,
+            "actual": 1.0,
+            "standard_error": 0.0
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 182,
+            "predicted": 0.1333,
+            "actual": 0.1099,
+            "standard_error": 0.0232
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 201,
+            "predicted": 0.2555,
+            "actual": 0.3035,
+            "standard_error": 0.0324
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 191,
+            "predicted": 0.3499,
+            "actual": 0.3089,
+            "standard_error": 0.0334
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 111,
+            "predicted": 0.4437,
+            "actual": 0.4054,
+            "standard_error": 0.0466
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 85,
+            "predicted": 0.547,
+            "actual": 0.5059,
+            "standard_error": 0.0542
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 60,
+            "predicted": 0.6798,
+            "actual": 0.6667,
+            "standard_error": 0.0609
+          }
+        ]
+      },
+      {
+        "model": "Dixon-Coles",
+        "calibrated": true,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.491566265060241,
+        "f1_macro": 0.36808620944042647,
+        "precision_macro": 0.3257275812422871,
+        "recall_macro": 0.4322337587425193,
+        "log_loss": 1.0167764526195586,
+        "brier": 0.6071855142740566,
+        "predicted_share": {
+          "H": 0.655421686746988,
+          "D": 0.0,
+          "A": 0.344578313253012
+        },
+        "confusion_matrix": [
+          [
+            271,
+            0,
+            74
+          ],
+          [
+            142,
+            0,
+            75
+          ],
+          [
+            131,
+            0,
+            137
+          ]
+        ],
+        "home_calibration_max_gap": 0.05880000000000002,
+        "home_calibration_within_noise": true,
+        "mean_predicted": {
+          "H": 0.45814631684915286,
+          "D": 0.23111196159002342,
+          "A": 0.3107417215608237
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 21,
+            "predicted": 0.1638,
+            "actual": 0.1429,
+            "standard_error": 0.0764
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 124,
+            "predicted": 0.2523,
+            "actual": 0.1935,
+            "standard_error": 0.0355
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 194,
+            "predicted": 0.3517,
+            "actual": 0.3144,
+            "standard_error": 0.0333
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 203,
+            "predicted": 0.4507,
+            "actual": 0.4089,
+            "standard_error": 0.0345
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 117,
+            "predicted": 0.5437,
+            "actual": 0.5043,
+            "standard_error": 0.0462
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 171,
+            "predicted": 0.7146,
+            "actual": 0.6725,
+            "standard_error": 0.0359
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 125,
+            "predicted": 0.1621,
+            "actual": 0.2,
+            "standard_error": 0.0358
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 704,
+            "predicted": 0.2432,
+            "actual": 0.2713,
+            "standard_error": 0.0168
+          },
+          {
+            "outcome": "D",
+            "band": "0.3-0.4",
+            "n": 1,
+            "predicted": 0.3107,
+            "actual": 1.0,
+            "standard_error": 0.0
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 200,
+            "predicted": 0.1191,
+            "actual": 0.105,
+            "standard_error": 0.0217
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 202,
+            "predicted": 0.2547,
+            "actual": 0.3119,
+            "standard_error": 0.0326
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 203,
+            "predicted": 0.3497,
+            "actual": 0.3251,
+            "standard_error": 0.0329
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 122,
+            "predicted": 0.4451,
+            "actual": 0.4508,
+            "standard_error": 0.045
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 81,
+            "predicted": 0.5348,
+            "actual": 0.5679,
+            "standard_error": 0.055
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 22,
+            "predicted": 0.6382,
+            "actual": 0.7727,
+            "standard_error": 0.0893
+          }
+        ]
+      },
+      {
+        "model": "Blend",
+        "calibrated": false,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.4903614457831325,
+        "f1_macro": 0.3663663663663663,
+        "precision_macro": 0.32376802852479986,
+        "recall_macro": 0.43071238012834384,
+        "log_loss": 1.0061324014574629,
+        "brier": 0.6029631327812948,
+        "predicted_share": {
+          "H": 0.6542168674698795,
+          "D": 0.0,
+          "A": 0.3457831325301205
+        },
+        "confusion_matrix": [
+          [
+            272,
+            0,
+            73
+          ],
+          [
+            138,
+            0,
+            79
+          ],
+          [
+            133,
+            0,
+            135
+          ]
+        ],
+        "home_calibration_max_gap": 0.06869999999999998,
+        "home_calibration_within_noise": true,
+        "mean_predicted": {
+          "H": 0.4467557232380189,
+          "D": 0.23639317549624939,
+          "A": 0.3168511012657317
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 58,
+            "predicted": 0.1466,
+            "actual": 0.1034,
+            "standard_error": 0.04
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 121,
+            "predicted": 0.2497,
+            "actual": 0.1983,
+            "standard_error": 0.0363
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 167,
+            "predicted": 0.3518,
+            "actual": 0.3653,
+            "standard_error": 0.0373
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 177,
+            "predicted": 0.4509,
+            "actual": 0.4237,
+            "standard_error": 0.0371
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 128,
+            "predicted": 0.5453,
+            "actual": 0.4766,
+            "standard_error": 0.0441
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 179,
+            "predicted": 0.6914,
+            "actual": 0.6592,
+            "standard_error": 0.0354
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 122,
+            "predicted": 0.1697,
+            "actual": 0.2131,
+            "standard_error": 0.0371
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 703,
+            "predicted": 0.2474,
+            "actual": 0.2717,
+            "standard_error": 0.0168
+          },
+          {
+            "outcome": "D",
+            "band": "0.3-0.4",
+            "n": 5,
+            "predicted": 0.3128,
+            "actual": 0.0,
+            "standard_error": 0.0
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 213,
+            "predicted": 0.1308,
+            "actual": 0.1455,
+            "standard_error": 0.0242
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 202,
+            "predicted": 0.2508,
+            "actual": 0.2624,
+            "standard_error": 0.031
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 186,
+            "predicted": 0.3499,
+            "actual": 0.3495,
+            "standard_error": 0.035
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 111,
+            "predicted": 0.4499,
+            "actual": 0.4324,
+            "standard_error": 0.047
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 77,
+            "predicted": 0.545,
+            "actual": 0.5455,
+            "standard_error": 0.0567
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 41,
+            "predicted": 0.6698,
+            "actual": 0.7073,
+            "standard_error": 0.0711
+          }
+        ]
+      },
+      {
+        "model": "Blend",
+        "calibrated": true,
+        "n_test": 830,
+        "test_seasons": "2024-25 onwards",
+        "accuracy": 0.491566265060241,
+        "f1_macro": 0.3646329640463031,
+        "precision_macro": 0.3267856297628627,
+        "recall_macro": 0.4291801860263898,
+        "log_loss": 1.0152561066522192,
+        "brier": 0.6085726596967398,
+        "predicted_share": {
+          "H": 0.6879518072289157,
+          "D": 0.0,
+          "A": 0.31204819277108437
+        },
+        "confusion_matrix": [
+          [
+            282,
+            0,
+            63
+          ],
+          [
+            147,
+            0,
+            70
+          ],
+          [
+            142,
+            0,
+            126
+          ]
+        ],
+        "home_calibration_max_gap": 0.09490000000000004,
+        "home_calibration_within_noise": false,
+        "mean_predicted": {
+          "H": 0.4803799189549094,
+          "D": 0.219510776089543,
+          "A": 0.30010930495554755
+        },
+        "actual_share": {
+          "H": 0.41566265060240964,
+          "D": 0.26144578313253014,
+          "A": 0.3228915662650602
+        },
+        "calibration": [
+          {
+            "outcome": "H",
+            "band": "0.0-0.2",
+            "n": 48,
+            "predicted": 0.1518,
+            "actual": 0.1042,
+            "standard_error": 0.0441
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 107,
+            "predicted": 0.2548,
+            "actual": 0.1776,
+            "standard_error": 0.0369
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 143,
+            "predicted": 0.3545,
+            "actual": 0.3636,
+            "standard_error": 0.0402
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 163,
+            "predicted": 0.4499,
+            "actual": 0.3865,
+            "standard_error": 0.0381
+          },
+          {
+            "outcome": "H",
+            "band": "0.5-0.6",
+            "n": 146,
+            "predicted": 0.547,
+            "actual": 0.4521,
+            "standard_error": 0.0412
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 223,
+            "predicted": 0.7187,
+            "actual": 0.6278,
+            "standard_error": 0.0324
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 194,
+            "predicted": 0.1632,
+            "actual": 0.2371,
+            "standard_error": 0.0305
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 636,
+            "predicted": 0.2367,
+            "actual": 0.2689,
+            "standard_error": 0.0176
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 249,
+            "predicted": 0.1178,
+            "actual": 0.1325,
+            "standard_error": 0.0215
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 195,
+            "predicted": 0.2497,
+            "actual": 0.2974,
+            "standard_error": 0.0327
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
+            "n": 164,
+            "predicted": 0.3488,
+            "actual": 0.3598,
+            "standard_error": 0.0375
+          },
+          {
+            "outcome": "A",
+            "band": "0.4-0.5",
+            "n": 116,
+            "predicted": 0.4468,
+            "actual": 0.431,
+            "standard_error": 0.046
+          },
+          {
+            "outcome": "A",
+            "band": "0.5-0.6",
+            "n": 69,
+            "predicted": 0.5439,
+            "actual": 0.5797,
+            "standard_error": 0.0594
+          },
+          {
+            "outcome": "A",
+            "band": "0.6-1.0",
+            "n": 37,
+            "predicted": 0.6626,
+            "actual": 0.7568,
+            "standard_error": 0.0705
+          }
+        ]
+      }
+    ],
+    "production": {
+      "model": "Blend",
+      "calibrated": false
+    }
+  }
 }

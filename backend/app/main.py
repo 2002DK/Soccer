@@ -94,13 +94,14 @@ def predict(req: PredictRequest) -> PredictResponse:
     except ValueError as e:
         raise HTTPException(400, str(e))
 
+    production = get_model_info()["production"]
     return PredictResponse(
         home_team=req.home_team,
         away_team=req.away_team,
         date=req.date or p.default_date(),
         probabilities=Probabilities(home_win=proba["H"], draw=proba["D"], away_win=proba["A"]),
         prediction=max(proba, key=proba.get),
-        model=get_model_info()["production"]["model"],
+        model=production.get("description", production["model"]),
     )
 
 
