@@ -1,0 +1,19 @@
+{
+  "params": {
+    "k": 15,
+    "home_advantage": 50,
+    "carry": 0.6666666666666666
+  },
+  "tune_squared_error": 0.15234160554596315,
+  "elo_only_model": {
+    "test_seasons": "2024-25 onwards",
+    "n_test": 830,
+    "accuracy": 0.4975903614457831,
+    "log_loss": 1.0108951453196817,
+    "baseline": {
+      "always_home_accuracy": 0.41566265060240964,
+      "class_prior_log_loss": 1.084142261767224
+    }
+  },
+  "ratings_after": "2026-10-19"
+}

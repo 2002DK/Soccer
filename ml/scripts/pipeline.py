@@ -6,6 +6,7 @@
 Steps, in order:
 - download: results from football-data.co.uk, xG from Understat
 - clean:    combine seasons into matches.csv
+- elo:      tune and compute Elo ratings (elo.csv, ratings.csv, elo.json)
 - features: build features.csv
 - compare:  tune and score every candidate model (slow; not run by default)
 - fit:      refit the production model on all seasons and save it
@@ -20,10 +21,11 @@ import build_features
 import clean_data
 import download_data
 import download_xg
+import elo
 from leagues import add_league_argument
 
-STEPS = ["download", "clean", "features", "compare", "fit"]
-DEFAULT_STEPS = ["download", "clean", "features", "fit"]
+STEPS = ["download", "clean", "elo", "features", "compare", "fit"]
+DEFAULT_STEPS = ["download", "clean", "elo", "features", "fit"]
 
 
 def run_step(step: str, league) -> None:
@@ -32,6 +34,8 @@ def run_step(step: str, league) -> None:
         download_xg.run(league)
     elif step == "clean":
         clean_data.run(league)
+    elif step == "elo":
+        elo.run(league)
     elif step == "features":
         build_features.run(league)
     elif step == "compare":

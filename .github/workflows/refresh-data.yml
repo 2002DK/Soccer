@@ -50,14 +50,15 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Rebuild features and refit model
+      - name: Update Elo ratings, rebuild features and refit model
         if: steps.changes.outputs.changed == 'true'
-        run: python ml/scripts/pipeline.py --league "$LEAGUE" --steps features,fit
+        run: python ml/scripts/pipeline.py --league "$LEAGUE" --steps elo,features,fit
 
-      - name: Test the API against the new data
+      - name: Test the pipeline code and the API against the new data
         if: steps.changes.outputs.changed == 'true'
-        working-directory: backend
-        run: python -m pytest -q
+        run: |
+          python -m pytest -q ml/tests
+          cd backend && python -m pytest -q
 
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
