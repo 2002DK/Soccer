@@ -15,7 +15,7 @@ services:
         - backend/**
         - ml/scripts/**
         - ml/models/**
-        - ml/data/processed/**
+        - ml/data/*/processed/**
         - render.yaml
     envVars:
       - key: PYTHON_VERSION

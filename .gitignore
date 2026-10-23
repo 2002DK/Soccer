@@ -6,4 +6,4 @@ node_modules/
 .env
 
 # Raw downloads are reproducible via ml/scripts/download_data.py
-ml/data/raw/
+ml/data/*/raw/

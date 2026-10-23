@@ -6,20 +6,21 @@ from functools import cache
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ML_DIR = REPO_ROOT / "ml"
-sys.path.insert(0, str(ML_DIR / "scripts"))
+sys.path.insert(0, str(REPO_ROOT / "ml" / "scripts"))
 
+from leagues import DEFAULT_LEAGUE, get_league  # noqa: E402
 from predict import Predictor  # noqa: E402
 
 
 @cache
-def get_predictor() -> Predictor:
-    """Load the model and match data once per process."""
-    return Predictor()
+def get_predictor(league_code: str = DEFAULT_LEAGUE) -> Predictor:
+    """Load a league's model and match data once per process."""
+    return Predictor(get_league(league_code))
 
 
 @cache
-def get_model_info() -> dict:
-    meta = json.loads((ML_DIR / "models" / "model_meta.json").read_text())
-    metrics = json.loads((ML_DIR / "models" / "metrics.json").read_text())
+def get_model_info(league_code: str = DEFAULT_LEAGUE) -> dict:
+    league = get_league(league_code)
+    meta = json.loads(league.meta_path.read_text())
+    metrics = json.loads(league.metrics_path.read_text())
     return {"production": meta, "comparison": metrics["results"]}

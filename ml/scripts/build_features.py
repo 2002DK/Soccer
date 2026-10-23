@@ -1,7 +1,7 @@
 """Build model input features from the clean match table.
 
-Reads ml/data/processed/matches.csv and writes ml/data/processed/features.csv
-with one row per match: identifiers, the target (`result`: H / D / A) and the
+Reads ml/data/<league>/processed/matches.csv and writes features.csv next to
+it with one row per match: identifiers, the target (`result`: H / D / A) and the
 features. Every feature uses only matches played before that match's date, so
 nothing leaks from the result being predicted.
 
@@ -18,14 +18,12 @@ home-minus-away difference):
 - h2h_*: last 5 meetings between the two teams, from the home side's view
 """
 
-from pathlib import Path
+import argparse
 
 import numpy as np
 import pandas as pd
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "processed"
-MATCHES_PATH = DATA_DIR / "matches.csv"
-FEATURES_PATH = DATA_DIR / "features.csv"
+from leagues import League, add_league_argument
 
 WINDOW = 5
 
@@ -198,11 +196,17 @@ def build_features(matches: pd.DataFrame, fixtures: pd.DataFrame | None = None) 
     return out.sort_values("match_id").drop(columns="match_id").reset_index(drop=True)
 
 
-def main() -> None:
-    matches = pd.read_csv(MATCHES_PATH, parse_dates=["date"])
+def run(league: League) -> None:
+    matches = pd.read_csv(league.matches_path, parse_dates=["date"])
     features = build_features(matches)
-    features.to_csv(FEATURES_PATH, index=False, date_format="%Y-%m-%d", float_format="%.4f")
-    print(f"wrote {len(features)} rows x {features.shape[1]} columns to {FEATURES_PATH}")
+    features.to_csv(league.features_path, index=False, date_format="%Y-%m-%d", float_format="%.4f")
+    print(f"wrote {len(features)} rows x {features.shape[1]} columns to {league.features_path}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    add_league_argument(parser)
+    run(parser.parse_args().league)
 
 
 if __name__ == "__main__":

@@ -1,19 +1,19 @@
-"""Combine the raw season CSVs into one clean match table.
+"""Combine a league's raw season CSVs into one clean match table.
 
-Reads ml/data/raw/E0_*.csv and writes ml/data/processed/matches.csv with one
-row per played match, sorted by date. Betting-odds columns are dropped; only
-match facts and stats are kept. xG is joined from the Understat files
-(ml/data/raw/understat_EPL_*.json), so it is empty before 2014-15.
+Reads ml/data/<league>/raw/<division>_*.csv and writes
+ml/data/<league>/processed/matches.csv with one row per played match, sorted
+by date. Betting-odds columns are dropped; only match facts and stats are kept.
+xG is joined from the Understat files (understat_*.json in the same folder),
+so it is empty before 2014-15 and for leagues Understat doesn't cover.
 """
 
+import argparse
 import json
 from pathlib import Path
 
 import pandas as pd
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-RAW_DIR = DATA_DIR / "raw"
-OUT_PATH = DATA_DIR / "processed" / "matches.csv"
+from leagues import League, add_league_argument
 
 # football-data.co.uk column -> our column name
 COLUMNS = {
@@ -42,17 +42,6 @@ COLUMNS = {
     "AR": "away_reds",
 }
 
-# Understat team name -> football-data.co.uk team name (others are identical)
-UNDERSTAT_NAMES = {
-    "Manchester City": "Man City",
-    "Manchester United": "Man United",
-    "Newcastle United": "Newcastle",
-    "Nottingham Forest": "Nott'm Forest",
-    "Queens Park Rangers": "QPR",
-    "West Bromwich Albion": "West Brom",
-    "Wolverhampton Wanderers": "Wolves",
-}
-
 INT_COLUMNS = [
     "home_goals", "away_goals", "home_goals_ht", "away_goals_ht",
     "home_shots", "away_shots", "home_shots_on_target", "away_shots_on_target",
@@ -75,19 +64,19 @@ def read_season(path: Path) -> pd.DataFrame:
     return df
 
 
-def read_understat() -> pd.DataFrame:
+def read_understat(league: League) -> pd.DataFrame:
     """Played matches' xG from Understat, keyed by season and the two teams."""
+    names = league.understat_names
     rows = []
-    for path in sorted(RAW_DIR.glob("understat_EPL_*.json")):
-        year = int(path.stem.rsplit("_", 1)[1])
-        season = f"{year}-{(year + 1) % 100:02d}"
+    for path in sorted(league.raw_dir.glob(f"understat_{league.understat_code}_*.json")):
+        season = league.season_label(int(path.stem.rsplit("_", 1)[1]))
         for m in json.loads(path.read_text(encoding="utf-8")):
             if not m["isResult"]:
                 continue
             rows.append({
                 "season": season,
-                "home_team": UNDERSTAT_NAMES.get(m["h"]["title"], m["h"]["title"]),
-                "away_team": UNDERSTAT_NAMES.get(m["a"]["title"], m["a"]["title"]),
+                "home_team": names.get(m["h"]["title"], m["h"]["title"]),
+                "away_team": names.get(m["a"]["title"], m["a"]["title"]),
                 "home_xg": float(m["xG"]["h"]),
                 "away_xg": float(m["xG"]["a"]),
             })
@@ -122,17 +111,24 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     return df.sort_values(["date", "kickoff", "home_team"], na_position="first").reset_index(drop=True)
 
 
-def main() -> None:
-    files = sorted(RAW_DIR.glob("E0_*.csv"))
+def run(league: League) -> None:
+    files = sorted(league.raw_dir.glob(f"{league.football_data_code}_*.csv"))
     if not files:
-        raise SystemExit(f"No raw files in {RAW_DIR}. Run download_data.py first.")
+        raise SystemExit(f"No raw files in {league.raw_dir}. Run download_data.py first.")
 
     matches = clean(pd.concat([read_season(f) for f in files], ignore_index=True))
-    matches = add_xg(matches, read_understat())
+    matches = add_xg(matches, read_understat(league))
 
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    matches.to_csv(OUT_PATH, index=False, date_format="%Y-%m-%d")
-    print(f"wrote {len(matches)} matches from {len(files)} seasons to {OUT_PATH}")
+    out = league.matches_path
+    out.parent.mkdir(parents=True, exist_ok=True)
+    matches.to_csv(out, index=False, date_format="%Y-%m-%d")
+    print(f"wrote {len(matches)} matches from {len(files)} seasons to {out}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    add_league_argument(parser)
+    run(parser.parse_args().league)
 
 
 if __name__ == "__main__":
