@@ -31,9 +31,9 @@ FEATURE_SET = "base"
 # V2 candidate -> weight on Logistic Regression in the final probabilities (the rest is Dixon-Coles)
 V2_LR_WEIGHT = {"Logistic Regression v2": 1.0, "Dixon-Coles": 0.0}
 V2_DESCRIPTIONS = {
-    "Logistic Regression v2": "Logistic Regression on V1 features plus Elo ratings",
+    "Logistic Regression v2": "Logistic Regression on Elo ratings, head-to-head and league home advantage",
     "Dixon-Coles": "Dixon-Coles scoreline model",
-    "Blend": "Blend of Logistic Regression (with Elo ratings) and the Dixon-Coles scoreline model",
+    "Blend": "Blend of an Elo-based Logistic Regression and the Dixon-Coles scoreline model",
 }
 
 

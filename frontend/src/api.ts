@@ -45,6 +45,15 @@ export interface Prediction {
   probabilities: { home_win: number; draw: number; away_win: number }
   prediction: Outcome
   model: string
+  why: Driver[]
+}
+
+export interface Driver {
+  driver: string
+  label: string
+  detail: string
+  effect: { home_win: number; draw: number; away_win: number }
+  points: number // percentage points on the most likely outcome
 }
 
 export interface ModelResult {

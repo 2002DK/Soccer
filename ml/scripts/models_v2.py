@@ -8,8 +8,14 @@ Seasons are split three ways by time:
 
 Candidates:
 - Elo only: home/draw/away from the Elo rating gap alone (a baseline)
-- Logistic Regression v2: V1's features plus Elo, the league's recent
-  home-win rate and the no-crowd flag; training matches weighted by recency
+- Logistic Regression v2: Elo ratings, the league's recent home-win rate and
+  the no-crowd flag (LR_FEATURES); training matches weighted by recency.
+  V1's form, league-position, home/away and head-to-head features and the
+  promoted flags are left out: Elo already counts those results, and with
+  them in, their small leftover effects often pointed the "wrong" way (a hot
+  streak read as luck that fades), which made the "Why" drivers misleading.
+  Without them the validation score was slightly better and the test score
+  the same within noise.
 - Dixon-Coles: scoreline model (dixon_coles.py), refitted weekly
 - Blend: a weighted average of the two
 Each is scored as it is and after a calibration step: a multinomial logistic
@@ -36,8 +42,7 @@ from build_features import V2_COLUMNS
 from leagues import League, add_league_argument
 
 LABELS = ["H", "D", "A"]
-ID_COLUMNS = ["season", "date", "home_team", "away_team", "result"]
-XG_COLUMNS_MARK = "_xg_"
+LR_FEATURES = ["home_elo", "away_elo", "diff_elo", "league_home_rate", "no_crowd"]
 
 LR_C_GRID = [0.001, 0.003, 0.01, 0.03]
 LR_HALF_LIFE_GRID = [None, 3, 6, 10]  # seasons; None = all seasons weigh the same
@@ -48,8 +53,8 @@ MIN_BAND = 50  # bands with fewer matches are reported but not judged
 
 
 def v2_feature_columns(df: pd.DataFrame) -> list[str]:
-    """V1 base features (no xG) plus the V2 additions."""
-    return [c for c in df.columns if c not in ID_COLUMNS and XG_COLUMNS_MARK not in c]
+    """The Logistic Regression v2 features present in `df`."""
+    return [c for c in LR_FEATURES if c in df.columns]
 
 
 def season_weights(seasons: pd.Series, half_life: float | None) -> np.ndarray:

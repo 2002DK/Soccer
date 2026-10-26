@@ -53,23 +53,35 @@ class Predictor:
         fixture = pd.DataFrame([{"season": self.season, "date": on, "home_team": home_team, "away_team": away_team}])
         return build_league_features(self.league, self.matches, fixture).iloc[-1]
 
+    def combine(self, X: pd.DataFrame, dc_probs: np.ndarray | None) -> np.ndarray:
+        """V2 probabilities from a feature row and Dixon-Coles probabilities:
+        Logistic Regression and/or Dixon-Coles, blended, then the optional calibration step."""
+        b = self.bundle
+        proba = np.zeros(3)
+        if b["lr"] is not None:
+            proba += b["lr_weight"] * b["lr"].predict_proba(X)[0]
+        if dc_probs is not None:
+            proba += (1 - b["lr_weight"]) * dc_probs
+        if b["calibrator"] is not None:
+            proba = b["calibrator"].predict_proba(np.log(np.clip(proba, 1e-6, 1))[None, :])[0]
+        return proba
+
     def predict(self, home_team: str, away_team: str, on: Date | None = None) -> dict[str, float]:
         """Probability of each outcome: {"H": ..., "D": ..., "A": ...}."""
         row = self.feature_row(home_team, away_team, on)
         X = row[self.features].to_frame().T.astype(float)
         b = self.bundle
         if b.get("version") == 2:
-            # V2: Logistic Regression and/or Dixon-Coles, blended, then the optional calibration step
-            proba = np.zeros(3)
-            if b["lr"] is not None:
-                proba += b["lr_weight"] * b["lr"].predict_proba(X)[0]
-            if b["dc"] is not None:
-                proba += (1 - b["lr_weight"]) * b["dc"].outcome_probs(home_team, away_team)
-            if b["calibrator"] is not None:
-                proba = b["calibrator"].predict_proba(np.log(np.clip(proba, 1e-6, 1))[None, :])[0]
+            dc_probs = b["dc"].outcome_probs(home_team, away_team) if b["dc"] is not None else None
+            proba = self.combine(X, dc_probs)
         else:
             proba = b["model"].predict_proba(X)[0]
         return dict(zip(self.labels, proba.round(4).tolist()))
+
+    def explain(self, home_team: str, away_team: str, on: Date | None = None) -> dict:
+        """Probabilities plus the drivers behind them (explain.py)."""
+        from explain import explain
+        return explain(self, home_team, away_team, on)
 
 
 def main() -> None:

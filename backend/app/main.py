@@ -52,6 +52,14 @@ class Probabilities(BaseModel):
     away_win: float
 
 
+class Driver(BaseModel):
+    driver: str = Field(description="driver id, e.g. 'strength'")
+    label: str
+    detail: str = Field(description="the numbers behind the driver, in words")
+    effect: Probabilities = Field(description="change in each probability caused by this driver")
+    points: float = Field(description="percentage points added to (or taken from) the most likely outcome")
+
+
 class PredictResponse(BaseModel):
     home_team: str
     away_team: str
@@ -59,6 +67,7 @@ class PredictResponse(BaseModel):
     probabilities: Probabilities
     prediction: Literal["H", "D", "A"]
     model: str
+    why: list[Driver] = Field(description="what pushes this prediction, biggest effect first")
 
 
 @app.get("/health")
@@ -81,19 +90,24 @@ def stats(team: str) -> dict:
 
 
 @lru_cache(maxsize=1024)
-def cached_prediction(home_team: str, away_team: str, on: Date | None) -> dict[str, float]:
-    # Building features takes ~1.5s and the data only changes on redeploy, so repeat requests are cached
-    return get_predictor().predict(home_team, away_team, on)
+def cached_prediction(home_team: str, away_team: str, on: Date | None) -> dict:
+    """Probabilities and drivers. Building features takes ~1.5s and the data only
+    changes on redeploy, so repeat requests are cached."""
+    p = get_predictor()
+    if p.bundle.get("version") == 2:
+        return p.explain(home_team, away_team, on)
+    return {"probabilities": p.predict(home_team, away_team, on), "why": []}  # V1 models have no drivers
 
 
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest) -> PredictResponse:
     p = get_predictor()
     try:
-        proba = cached_prediction(req.home_team, req.away_team, req.date)
+        result = cached_prediction(req.home_team, req.away_team, req.date)
     except ValueError as e:
         raise HTTPException(400, str(e))
 
+    proba = result["probabilities"]
     production = get_model_info()["production"]
     return PredictResponse(
         home_team=req.home_team,
@@ -102,6 +116,7 @@ def predict(req: PredictRequest) -> PredictResponse:
         probabilities=Probabilities(home_win=proba["H"], draw=proba["D"], away_win=proba["A"]),
         prediction=max(proba, key=proba.get),
         model=production.get("description", production["model"]),
+        why=result["why"],
     )
 
 

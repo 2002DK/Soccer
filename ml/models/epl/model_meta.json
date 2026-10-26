@@ -1,14 +1,14 @@
 {
   "model": "Blend",
-  "description": "Blend of Logistic Regression (with Elo ratings) and the Dixon-Coles scoreline model",
+  "description": "Blend of an Elo-based Logistic Regression and the Dixon-Coles scoreline model",
   "feature_set": "v2",
   "params": {
-    "lr_C": 0.003,
-    "lr_half_life_seasons": null,
+    "lr_C": 0.03,
+    "lr_half_life_seasons": 3,
     "dc_half_life_days": 365,
     "blend_lr_weight": 0.75
   },
-  "n_features": 42,
+  "n_features": 5,
   "trained_on": {
     "matches": 7670,
     "first_season": "2006-07",
@@ -17,12 +17,12 @@
   "test_scores": {
     "test_seasons": "2024-25 onwards",
     "n_test": 830,
-    "accuracy": 0.4903614457831325,
-    "f1_macro": 0.3663663663663663,
-    "precision_macro": 0.32376802852479986,
-    "recall_macro": 0.43071238012834384,
-    "log_loss": 1.0061324014574629,
-    "brier": 0.6029631327812948
+    "accuracy": 0.4963855421686747,
+    "f1_macro": 0.3710367138332722,
+    "precision_macro": 0.3291774891774892,
+    "recall_macro": 0.43582089552238806,
+    "log_loss": 1.0062177163691703,
+    "brier": 0.6036718518969086
   },
-  "created_at": "2026-10-23T00:20:03+00:00"
+  "created_at": "2026-10-26T20:56:11+00:00"
 }

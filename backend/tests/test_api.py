@@ -48,6 +48,10 @@ def test_predict(teams):
     p = body["probabilities"]
     assert sum(p.values()) == pytest.approx(1, abs=1e-3)
     assert body["prediction"] == {"home_win": "H", "draw": "D", "away_win": "A"}[max(p, key=p.get)]
+    # Drivers: biggest effect on the most likely outcome first
+    points = [abs(d["points"]) for d in body["why"]]
+    assert points == sorted(points, reverse=True)
+    assert all(d["label"] and d["detail"] for d in body["why"])
 
 
 def test_predict_swapping_venue_changes_prediction(teams):

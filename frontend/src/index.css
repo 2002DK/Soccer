@@ -439,3 +439,31 @@ a { color: var(--accent); }
   color: var(--accent-ink);
 }
 .confusion .correct { font-weight: 700; }
+
+/* "Why" drivers */
+
+.why { margin-top: 20px; }
+.why h3 { margin: 0 0 4px; }
+.why-lead { font-size: 0.9rem; margin-bottom: 8px; }
+.why-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.why-list li {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--grid);
+}
+.why-points {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.why-detail {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+}

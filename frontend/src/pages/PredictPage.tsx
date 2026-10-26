@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api, type Prediction, type TeamsResponse } from '../api'
 import { ProbabilityBar } from '../components/ProbabilityBar'
+import { WhyList } from '../components/WhyList'
 import { StatsCard } from '../components/StatsCard'
 import { ErrorMessage, Loading } from '../components/Status'
 import { longDate } from '../format'
@@ -51,6 +52,7 @@ export function PredictPage({ teams }: { teams: TeamsResponse }) {
             <>
               <h2>{headline(prediction.data)}</h2>
               <ProbabilityBar prediction={prediction.data} />
+              <WhyList prediction={prediction.data} />
               <p className="footnote">
                 Model: {prediction.data.model}, trained on Premier League matches since 2006-07, using results up to{' '}
                 {longDate(teams.data_through)}.

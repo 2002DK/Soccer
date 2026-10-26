@@ -272,11 +272,11 @@
   ],
   "v2": {
     "settings": {
-      "lr_C": 0.003,
-      "lr_half_life_seasons": null,
+      "lr_C": 0.03,
+      "lr_half_life_seasons": 3,
       "dc_half_life_days": 365,
       "blend_lr_weight": 0.75,
-      "n_features": 42
+      "n_features": 5
     },
     "splits": {
       "train": "2006-07 to 2021-22 (6080 matches)",
@@ -609,22 +609,22 @@
         "calibrated": false,
         "n_test": 830,
         "test_seasons": "2024-25 onwards",
-        "accuracy": 0.4939759036144578,
-        "f1_macro": 0.3692643016314514,
-        "precision_macro": 0.32690158042270717,
-        "recall_macro": 0.43388852837262964,
-        "log_loss": 1.0097947887478433,
-        "brier": 0.6057026453506198,
+        "accuracy": 0.5012048192771085,
+        "f1_macro": 0.37382085759776656,
+        "precision_macro": 0.332116883796369,
+        "recall_macro": 0.43940803230225683,
+        "log_loss": 1.009722077333774,
+        "brier": 0.6065314628418552,
         "predicted_share": {
-          "H": 0.6578313253012048,
+          "H": 0.6674698795180722,
           "D": 0.0,
-          "A": 0.3421686746987952
+          "A": 0.3325301204819277
         },
         "confusion_matrix": [
           [
-            274,
+            281,
             0,
-            71
+            64
           ],
           [
             140,
@@ -632,17 +632,17 @@
             77
           ],
           [
-            132,
+            133,
             0,
-            136
+            135
           ]
         ],
-        "home_calibration_max_gap": 0.0577,
-        "home_calibration_within_noise": true,
+        "home_calibration_max_gap": 0.07810000000000006,
+        "home_calibration_within_noise": false,
         "mean_predicted": {
-          "H": 0.45312343206241396,
-          "D": 0.2364514345503113,
-          "A": 0.3104251333872746
+          "H": 0.4592833564630348,
+          "D": 0.23000999420830412,
+          "A": 0.3107066493286611
         },
         "actual_share": {
           "H": 0.41566265060240964,
@@ -653,122 +653,122 @@
           {
             "outcome": "H",
             "band": "0.0-0.2",
-            "n": 57,
-            "predicted": 0.1454,
-            "actual": 0.0877,
-            "standard_error": 0.0375
+            "n": 69,
+            "predicted": 0.1436,
+            "actual": 0.1159,
+            "standard_error": 0.0385
           },
           {
             "outcome": "H",
             "band": "0.2-0.3",
-            "n": 117,
-            "predicted": 0.2508,
-            "actual": 0.1966,
-            "standard_error": 0.0367
+            "n": 104,
+            "predicted": 0.248,
+            "actual": 0.2115,
+            "standard_error": 0.04
           },
           {
             "outcome": "H",
             "band": "0.3-0.4",
-            "n": 169,
-            "predicted": 0.3512,
-            "actual": 0.3609,
-            "standard_error": 0.0369
+            "n": 150,
+            "predicted": 0.3528,
+            "actual": 0.3533,
+            "standard_error": 0.039
           },
           {
             "outcome": "H",
             "band": "0.4-0.5",
-            "n": 159,
-            "predicted": 0.4511,
-            "actual": 0.4151,
-            "standard_error": 0.0391
+            "n": 158,
+            "predicted": 0.4497,
+            "actual": 0.3987,
+            "standard_error": 0.039
           },
           {
             "outcome": "H",
             "band": "0.5-0.6",
-            "n": 137,
-            "predicted": 0.5453,
-            "actual": 0.4891,
-            "standard_error": 0.0427
+            "n": 149,
+            "predicted": 0.5498,
+            "actual": 0.5034,
+            "standard_error": 0.041
           },
           {
             "outcome": "H",
             "band": "0.6-1.0",
-            "n": 191,
-            "predicted": 0.6946,
-            "actual": 0.644,
-            "standard_error": 0.0346
+            "n": 200,
+            "predicted": 0.6981,
+            "actual": 0.62,
+            "standard_error": 0.0343
           },
           {
             "outcome": "D",
             "band": "0.0-0.2",
-            "n": 136,
-            "predicted": 0.17,
-            "actual": 0.2574,
-            "standard_error": 0.0375
+            "n": 142,
+            "predicted": 0.1706,
+            "actual": 0.2183,
+            "standard_error": 0.0347
           },
           {
             "outcome": "D",
             "band": "0.2-0.3",
-            "n": 671,
-            "predicted": 0.2473,
-            "actual": 0.2593,
-            "standard_error": 0.0169
+            "n": 687,
+            "predicted": 0.2422,
+            "actual": 0.2707,
+            "standard_error": 0.017
           },
           {
             "outcome": "D",
             "band": "0.3-0.4",
-            "n": 23,
-            "predicted": 0.3124,
-            "actual": 0.3478,
-            "standard_error": 0.0993
+            "n": 1,
+            "predicted": 0.3026,
+            "actual": 0.0,
+            "standard_error": 0.0
           },
           {
             "outcome": "A",
             "band": "0.0-0.2",
-            "n": 238,
-            "predicted": 0.1313,
-            "actual": 0.1429,
-            "standard_error": 0.0227
+            "n": 246,
+            "predicted": 0.1276,
+            "actual": 0.1463,
+            "standard_error": 0.0225
           },
           {
             "outcome": "A",
             "band": "0.2-0.3",
-            "n": 191,
-            "predicted": 0.2508,
-            "actual": 0.267,
-            "standard_error": 0.032
+            "n": 185,
+            "predicted": 0.2488,
+            "actual": 0.2595,
+            "standard_error": 0.0322
           },
           {
             "outcome": "A",
             "band": "0.3-0.4",
-            "n": 163,
-            "predicted": 0.348,
-            "actual": 0.3865,
-            "standard_error": 0.0381
+            "n": 167,
+            "predicted": 0.3484,
+            "actual": 0.4012,
+            "standard_error": 0.0379
           },
           {
             "outcome": "A",
             "band": "0.4-0.5",
-            "n": 128,
-            "predicted": 0.4443,
-            "actual": 0.3906,
-            "standard_error": 0.0431
+            "n": 97,
+            "predicted": 0.441,
+            "actual": 0.4021,
+            "standard_error": 0.0498
           },
           {
             "outcome": "A",
             "band": "0.5-0.6",
-            "n": 70,
-            "predicted": 0.5445,
-            "actual": 0.6,
-            "standard_error": 0.0586
+            "n": 84,
+            "predicted": 0.539,
+            "actual": 0.5238,
+            "standard_error": 0.0545
           },
           {
             "outcome": "A",
             "band": "0.6-1.0",
-            "n": 40,
-            "predicted": 0.6696,
-            "actual": 0.7,
-            "standard_error": 0.0725
+            "n": 51,
+            "predicted": 0.6713,
+            "actual": 0.6667,
+            "standard_error": 0.066
           }
         ]
       },
@@ -777,40 +777,40 @@
         "calibrated": true,
         "n_test": 830,
         "test_seasons": "2024-25 onwards",
-        "accuracy": 0.491566265060241,
-        "f1_macro": 0.3637057786077394,
-        "precision_macro": 0.32604242354278007,
-        "recall_macro": 0.42862499098709356,
-        "log_loss": 1.0199618577178953,
-        "brier": 0.6119138891179216,
+        "accuracy": 0.4927710843373494,
+        "f1_macro": 0.3618233618233619,
+        "precision_macro": 0.32787252771111064,
+        "recall_macro": 0.4276479919244358,
+        "log_loss": 1.0210017725355618,
+        "brier": 0.6135902326574701,
         "predicted_share": {
-          "H": 0.6903614457831325,
+          "H": 0.7120481927710843,
           "D": 0.0,
-          "A": 0.3096385542168675
+          "A": 0.28795180722891567
         },
         "confusion_matrix": [
           [
-            284,
+            292,
             0,
-            61
+            53
           ],
           [
-            145,
+            148,
             0,
-            72
+            69
           ],
           [
-            144,
+            151,
             0,
-            124
+            117
           ]
         ],
-        "home_calibration_max_gap": 0.11499999999999999,
+        "home_calibration_max_gap": 0.1139,
         "home_calibration_within_noise": false,
         "mean_predicted": {
-          "H": 0.48445677067135,
-          "D": 0.21684682599342378,
-          "A": 0.2986964033352263
+          "H": 0.49536656568801946,
+          "D": 0.2151488924876599,
+          "A": 0.2894845418243207
         },
         "actual_share": {
           "H": 0.41566265060240964,
@@ -821,114 +821,114 @@
           {
             "outcome": "H",
             "band": "0.0-0.2",
-            "n": 49,
-            "predicted": 0.1456,
-            "actual": 0.0816,
+            "n": 58,
+            "predicted": 0.1428,
+            "actual": 0.069,
+            "standard_error": 0.0333
+          },
+          {
+            "outcome": "H",
+            "band": "0.2-0.3",
+            "n": 95,
+            "predicted": 0.2537,
+            "actual": 0.2211,
+            "standard_error": 0.0426
+          },
+          {
+            "outcome": "H",
+            "band": "0.3-0.4",
+            "n": 114,
+            "predicted": 0.3551,
+            "actual": 0.3421,
+            "standard_error": 0.0444
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 153,
+            "predicted": 0.45,
+            "actual": 0.3725,
             "standard_error": 0.0391
           },
           {
             "outcome": "H",
-            "band": "0.2-0.3",
-            "n": 109,
-            "predicted": 0.2521,
-            "actual": 0.1927,
-            "standard_error": 0.0378
-          },
-          {
-            "outcome": "H",
-            "band": "0.3-0.4",
-            "n": 140,
-            "predicted": 0.3547,
-            "actual": 0.3643,
-            "standard_error": 0.0407
-          },
-          {
-            "outcome": "H",
-            "band": "0.4-0.5",
-            "n": 151,
-            "predicted": 0.4504,
-            "actual": 0.3775,
-            "standard_error": 0.0394
-          },
-          {
-            "outcome": "H",
             "band": "0.5-0.6",
+            "n": 144,
+            "predicted": 0.5495,
+            "actual": 0.4444,
+            "standard_error": 0.0414
+          },
+          {
+            "outcome": "H",
+            "band": "0.6-1.0",
+            "n": 266,
+            "predicted": 0.7154,
+            "actual": 0.6015,
+            "standard_error": 0.03
+          },
+          {
+            "outcome": "D",
+            "band": "0.0-0.2",
+            "n": 208,
+            "predicted": 0.1603,
+            "actual": 0.2115,
+            "standard_error": 0.0283
+          },
+          {
+            "outcome": "D",
+            "band": "0.2-0.3",
+            "n": 622,
+            "predicted": 0.2335,
+            "actual": 0.2781,
+            "standard_error": 0.018
+          },
+          {
+            "outcome": "A",
+            "band": "0.0-0.2",
+            "n": 302,
+            "predicted": 0.1185,
+            "actual": 0.149,
+            "standard_error": 0.0205
+          },
+          {
+            "outcome": "A",
+            "band": "0.2-0.3",
+            "n": 176,
+            "predicted": 0.2489,
+            "actual": 0.3409,
+            "standard_error": 0.0357
+          },
+          {
+            "outcome": "A",
+            "band": "0.3-0.4",
             "n": 147,
-            "predicted": 0.5504,
-            "actual": 0.4762,
-            "standard_error": 0.0412
-          },
-          {
-            "outcome": "H",
-            "band": "0.6-1.0",
-            "n": 234,
-            "predicted": 0.7218,
-            "actual": 0.6068,
-            "standard_error": 0.0319
-          },
-          {
-            "outcome": "D",
-            "band": "0.0-0.2",
-            "n": 214,
-            "predicted": 0.1626,
-            "actual": 0.243,
-            "standard_error": 0.0293
-          },
-          {
-            "outcome": "D",
-            "band": "0.2-0.3",
-            "n": 616,
-            "predicted": 0.2357,
-            "actual": 0.2679,
-            "standard_error": 0.0178
-          },
-          {
-            "outcome": "A",
-            "band": "0.0-0.2",
-            "n": 264,
-            "predicted": 0.1183,
-            "actual": 0.1402,
-            "standard_error": 0.0214
-          },
-          {
-            "outcome": "A",
-            "band": "0.2-0.3",
-            "n": 180,
-            "predicted": 0.248,
-            "actual": 0.2944,
-            "standard_error": 0.034
-          },
-          {
-            "outcome": "A",
-            "band": "0.3-0.4",
-            "n": 158,
-            "predicted": 0.3468,
-            "actual": 0.3797,
-            "standard_error": 0.0386
+            "predicted": 0.3487,
+            "actual": 0.3946,
+            "standard_error": 0.0403
           },
           {
             "outcome": "A",
             "band": "0.4-0.5",
-            "n": 126,
-            "predicted": 0.4492,
-            "actual": 0.4365,
-            "standard_error": 0.0442
+            "n": 91,
+            "predicted": 0.4476,
+            "actual": 0.4066,
+            "standard_error": 0.0515
           },
           {
             "outcome": "A",
             "band": "0.5-0.6",
-            "n": 61,
-            "predicted": 0.5465,
-            "actual": 0.541,
-            "standard_error": 0.0638
+            "n": 65,
+            "predicted": 0.5436,
+            "actual": 0.5231,
+            "standard_error": 0.062
           },
           {
             "outcome": "A",
             "band": "0.6-1.0",
-            "n": 41,
-            "predicted": 0.6659,
-            "actual": 0.7317,
-            "standard_error": 0.0692
+            "n": 49,
+            "predicted": 0.6805,
+            "actual": 0.6939,
+            "standard_error": 0.0658
           }
         ]
       },
@@ -1281,40 +1281,40 @@
         "calibrated": false,
         "n_test": 830,
         "test_seasons": "2024-25 onwards",
-        "accuracy": 0.4903614457831325,
-        "f1_macro": 0.3663663663663663,
-        "precision_macro": 0.32376802852479986,
-        "recall_macro": 0.43071238012834384,
-        "log_loss": 1.0061324014574629,
-        "brier": 0.6029631327812948,
+        "accuracy": 0.4963855421686747,
+        "f1_macro": 0.3710367138332722,
+        "precision_macro": 0.3291774891774892,
+        "recall_macro": 0.43582089552238806,
+        "log_loss": 1.0062177163691703,
+        "brier": 0.6036718518969086,
         "predicted_share": {
-          "H": 0.6542168674698795,
+          "H": 0.6626506024096386,
           "D": 0.0,
-          "A": 0.3457831325301205
+          "A": 0.3373493975903614
         },
         "confusion_matrix": [
           [
-            272,
+            276,
             0,
-            73
+            69
           ],
           [
-            138,
+            142,
             0,
-            79
+            75
           ],
           [
-            133,
+            132,
             0,
-            135
+            136
           ]
         ],
-        "home_calibration_max_gap": 0.06869999999999998,
+        "home_calibration_max_gap": 0.06040000000000001,
         "home_calibration_within_noise": true,
         "mean_predicted": {
-          "H": 0.4467557232380189,
-          "D": 0.23639317549624939,
-          "A": 0.3168511012657317
+          "H": 0.45137566653848443,
+          "D": 0.23156209523974394,
+          "A": 0.3170622382217716
         },
         "actual_share": {
           "H": 0.41566265060240964,
@@ -1325,122 +1325,114 @@
           {
             "outcome": "H",
             "band": "0.0-0.2",
-            "n": 58,
-            "predicted": 0.1466,
-            "actual": 0.1034,
-            "standard_error": 0.04
+            "n": 68,
+            "predicted": 0.1464,
+            "actual": 0.1029,
+            "standard_error": 0.0369
           },
           {
             "outcome": "H",
             "band": "0.2-0.3",
-            "n": 121,
-            "predicted": 0.2497,
-            "actual": 0.1983,
-            "standard_error": 0.0363
+            "n": 111,
+            "predicted": 0.2495,
+            "actual": 0.2432,
+            "standard_error": 0.0407
           },
           {
             "outcome": "H",
             "band": "0.3-0.4",
-            "n": 167,
-            "predicted": 0.3518,
-            "actual": 0.3653,
+            "n": 157,
+            "predicted": 0.3532,
+            "actual": 0.3439,
+            "standard_error": 0.0379
+          },
+          {
+            "outcome": "H",
+            "band": "0.4-0.5",
+            "n": 171,
+            "predicted": 0.4522,
+            "actual": 0.3918,
             "standard_error": 0.0373
           },
           {
             "outcome": "H",
-            "band": "0.4-0.5",
-            "n": 177,
-            "predicted": 0.4509,
-            "actual": 0.4237,
-            "standard_error": 0.0371
-          },
-          {
-            "outcome": "H",
             "band": "0.5-0.6",
-            "n": 128,
-            "predicted": 0.5453,
-            "actual": 0.4766,
-            "standard_error": 0.0441
+            "n": 135,
+            "predicted": 0.5464,
+            "actual": 0.5111,
+            "standard_error": 0.043
           },
           {
             "outcome": "H",
             "band": "0.6-1.0",
-            "n": 179,
-            "predicted": 0.6914,
-            "actual": 0.6592,
-            "standard_error": 0.0354
+            "n": 188,
+            "predicted": 0.6939,
+            "actual": 0.6436,
+            "standard_error": 0.0349
           },
           {
             "outcome": "D",
             "band": "0.0-0.2",
-            "n": 122,
-            "predicted": 0.1697,
-            "actual": 0.2131,
-            "standard_error": 0.0371
+            "n": 133,
+            "predicted": 0.1701,
+            "actual": 0.1955,
+            "standard_error": 0.0344
           },
           {
             "outcome": "D",
             "band": "0.2-0.3",
-            "n": 703,
-            "predicted": 0.2474,
-            "actual": 0.2717,
-            "standard_error": 0.0168
-          },
-          {
-            "outcome": "D",
-            "band": "0.3-0.4",
-            "n": 5,
-            "predicted": 0.3128,
-            "actual": 0.0,
-            "standard_error": 0.0
+            "n": 697,
+            "predicted": 0.2433,
+            "actual": 0.274,
+            "standard_error": 0.0169
           },
           {
             "outcome": "A",
             "band": "0.0-0.2",
-            "n": 213,
-            "predicted": 0.1308,
-            "actual": 0.1455,
-            "standard_error": 0.0242
+            "n": 229,
+            "predicted": 0.1315,
+            "actual": 0.1354,
+            "standard_error": 0.0226
           },
           {
             "outcome": "A",
             "band": "0.2-0.3",
-            "n": 202,
-            "predicted": 0.2508,
-            "actual": 0.2624,
-            "standard_error": 0.031
+            "n": 187,
+            "predicted": 0.2505,
+            "actual": 0.2567,
+            "standard_error": 0.0319
           },
           {
             "outcome": "A",
             "band": "0.3-0.4",
-            "n": 186,
-            "predicted": 0.3499,
-            "actual": 0.3495,
-            "standard_error": 0.035
+            "n": 180,
+            "predicted": 0.348,
+            "actual": 0.3889,
+            "standard_error": 0.0363
           },
           {
             "outcome": "A",
             "band": "0.4-0.5",
-            "n": 111,
-            "predicted": 0.4499,
-            "actual": 0.4324,
-            "standard_error": 0.047
+            "n": 104,
+            "predicted": 0.4477,
+            "actual": 0.4135,
+            "standard_error": 0.0483
           },
           {
             "outcome": "A",
             "band": "0.5-0.6",
-            "n": 77,
-            "predicted": 0.545,
-            "actual": 0.5455,
-            "standard_error": 0.0567
+            "n": 79,
+            "predicted": 0.5436,
+            "actual": 0.5443,
+            "standard_error": 0.056
           },
           {
             "outcome": "A",
             "band": "0.6-1.0",
-            "n": 41,
-            "predicted": 0.6698,
-            "actual": 0.7073,
-            "standard_error": 0.0711
+            "n": 51,
+            "predicted": 0.6676,
+            "actual": 0.6471,
+            "standard_error": 0.0669
           }
         ]
       },
@@ -1449,40 +1441,40 @@
         "calibrated": true,
         "n_test": 830,
         "test_seasons": "2024-25 onwards",
-        "accuracy": 0.491566265060241,
-        "f1_macro": 0.3646329640463031,
-        "precision_macro": 0.3267856297628627,
-        "recall_macro": 0.4291801860263898,
-        "log_loss": 1.0152561066522192,
-        "brier": 0.6085726596967398,
+        "accuracy": 0.4939759036144578,
+        "f1_macro": 0.3639120121732904,
+        "precision_macro": 0.3288946082545366,
+        "recall_macro": 0.4294469680582594,
+        "log_loss": 1.0149450575146168,
+        "brier": 0.6092238804421716,
         "predicted_share": {
-          "H": 0.6879518072289157,
+          "H": 0.7060240963855422,
           "D": 0.0,
-          "A": 0.31204819277108437
+          "A": 0.29397590361445786
         },
         "confusion_matrix": [
           [
-            282,
+            290,
             0,
-            63
+            55
           ],
           [
-            147,
+            148,
             0,
-            70
+            69
           ],
           [
-            142,
+            148,
             0,
-            126
+            120
           ]
         ],
-        "home_calibration_max_gap": 0.09490000000000004,
+        "home_calibration_max_gap": 0.11269999999999997,
         "home_calibration_within_noise": false,
         "mean_predicted": {
-          "H": 0.4803799189549094,
-          "D": 0.219510776089543,
-          "A": 0.30010930495554755
+          "H": 0.48775022592407197,
+          "D": 0.2185279396227582,
+          "A": 0.2937218344531698
         },
         "actual_share": {
           "H": 0.41566265060240964,
@@ -1493,114 +1485,114 @@
           {
             "outcome": "H",
             "band": "0.0-0.2",
-            "n": 48,
-            "predicted": 0.1518,
-            "actual": 0.1042,
-            "standard_error": 0.0441
+            "n": 57,
+            "predicted": 0.1521,
+            "actual": 0.0702,
+            "standard_error": 0.0338
           },
           {
             "outcome": "H",
             "band": "0.2-0.3",
-            "n": 107,
-            "predicted": 0.2548,
-            "actual": 0.1776,
-            "standard_error": 0.0369
+            "n": 91,
+            "predicted": 0.2541,
+            "actual": 0.1758,
+            "standard_error": 0.0399
           },
           {
             "outcome": "H",
             "band": "0.3-0.4",
-            "n": 143,
-            "predicted": 0.3545,
-            "actual": 0.3636,
-            "standard_error": 0.0402
+            "n": 133,
+            "predicted": 0.3547,
+            "actual": 0.3759,
+            "standard_error": 0.042
           },
           {
             "outcome": "H",
             "band": "0.4-0.5",
-            "n": 163,
-            "predicted": 0.4499,
-            "actual": 0.3865,
-            "standard_error": 0.0381
+            "n": 153,
+            "predicted": 0.4487,
+            "actual": 0.3987,
+            "standard_error": 0.0396
           },
           {
             "outcome": "H",
             "band": "0.5-0.6",
-            "n": 146,
-            "predicted": 0.547,
-            "actual": 0.4521,
-            "standard_error": 0.0412
+            "n": 159,
+            "predicted": 0.5467,
+            "actual": 0.434,
+            "standard_error": 0.0393
           },
           {
             "outcome": "H",
             "band": "0.6-1.0",
-            "n": 223,
-            "predicted": 0.7187,
-            "actual": 0.6278,
-            "standard_error": 0.0324
+            "n": 237,
+            "predicted": 0.7184,
+            "actual": 0.6118,
+            "standard_error": 0.0317
           },
           {
             "outcome": "D",
             "band": "0.0-0.2",
-            "n": 194,
-            "predicted": 0.1632,
-            "actual": 0.2371,
-            "standard_error": 0.0305
+            "n": 189,
+            "predicted": 0.1605,
+            "actual": 0.2011,
+            "standard_error": 0.0292
           },
           {
             "outcome": "D",
             "band": "0.2-0.3",
-            "n": 636,
-            "predicted": 0.2367,
-            "actual": 0.2689,
-            "standard_error": 0.0176
+            "n": 641,
+            "predicted": 0.2356,
+            "actual": 0.2793,
+            "standard_error": 0.0177
           },
           {
             "outcome": "A",
             "band": "0.0-0.2",
-            "n": 249,
-            "predicted": 0.1178,
-            "actual": 0.1325,
-            "standard_error": 0.0215
+            "n": 272,
+            "predicted": 0.1174,
+            "actual": 0.1434,
+            "standard_error": 0.0212
           },
           {
             "outcome": "A",
             "band": "0.2-0.3",
-            "n": 195,
-            "predicted": 0.2497,
-            "actual": 0.2974,
-            "standard_error": 0.0327
+            "n": 193,
+            "predicted": 0.2475,
+            "actual": 0.3212,
+            "standard_error": 0.0336
           },
           {
             "outcome": "A",
             "band": "0.3-0.4",
-            "n": 164,
-            "predicted": 0.3488,
-            "actual": 0.3598,
-            "standard_error": 0.0375
+            "n": 158,
+            "predicted": 0.3495,
+            "actual": 0.3861,
+            "standard_error": 0.0387
           },
           {
             "outcome": "A",
             "band": "0.4-0.5",
-            "n": 116,
-            "predicted": 0.4468,
-            "actual": 0.431,
-            "standard_error": 0.046
+            "n": 91,
+            "predicted": 0.4442,
+            "actual": 0.3516,
+            "standard_error": 0.0501
           },
           {
             "outcome": "A",
             "band": "0.5-0.6",
-            "n": 69,
-            "predicted": 0.5439,
-            "actual": 0.5797,
-            "standard_error": 0.0594
+            "n": 75,
+            "predicted": 0.5426,
+            "actual": 0.6133,
+            "standard_error": 0.0562
           },
           {
             "outcome": "A",
             "band": "0.6-1.0",
-            "n": 37,
-            "predicted": 0.6626,
-            "actual": 0.7568,
-            "standard_error": 0.0705
+            "n": 41,
+            "predicted": 0.6773,
+            "actual": 0.6829,
+            "standard_error": 0.0727
           }
         ]
       }
