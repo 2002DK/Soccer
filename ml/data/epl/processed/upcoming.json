@@ -1,0 +1,730 @@
+{
+  "generated_at": "2026-10-27T18:46:07Z",
+  "league": "epl",
+  "season": "2026-27",
+  "data_through": "2026-10-25",
+  "model": "Blend of an Elo-based Logistic Regression and the Dixon-Coles scoreline model",
+  "window_days": 7,
+  "fixtures": [
+    {
+      "id": "31260",
+      "kickoff": "2026-10-31T12:30:00Z",
+      "home_team": "Chelsea",
+      "away_team": "Man United",
+      "probabilities": {
+        "home_win": 0.4344,
+        "draw": 0.26,
+        "away_win": 0.3056
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Chelsea 1.8 v Man United 1.4",
+          "effect": {
+            "home_win": 0.0096,
+            "draw": -0.0069,
+            "away_win": -0.0028
+          },
+          "points": 1.0
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0057,
+            "draw": 0.0021,
+            "away_win": 0.0036
+          },
+          "points": -0.6
+        },
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Chelsea 1514 v Man United 1520",
+          "effect": {
+            "home_win": -0.0016,
+            "draw": -0.0023,
+            "away_win": 0.0039
+          },
+          "points": -0.2
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.79,
+          "away": 1.42
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1116
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0919
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "probability": 0.0728
+          }
+        ],
+        "over_2_5": 0.6218,
+        "both_teams_score": 0.6403
+      }
+    },
+    {
+      "id": "31264",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Bournemouth",
+      "away_team": "Leeds",
+      "probabilities": {
+        "home_win": 0.4884,
+        "draw": 0.261,
+        "away_win": 0.2506
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Bournemouth 1527 v Leeds 1480",
+          "effect": {
+            "home_win": 0.0572,
+            "draw": -0.009,
+            "away_win": -0.0482
+          },
+          "points": 5.7
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0058,
+            "draw": 0.0025,
+            "away_win": 0.0033
+          },
+          "points": -0.6
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Bournemouth 1.5 v Leeds 1.2",
+          "effect": {
+            "home_win": 0.0049,
+            "draw": 0.0009,
+            "away_win": -0.0057
+          },
+          "points": 0.5
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.49,
+          "away": 1.16
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.133
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.0947
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0908
+          }
+        ],
+        "over_2_5": 0.4929,
+        "both_teams_score": 0.5418
+      }
+    },
+    {
+      "id": "31265",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Brentford",
+      "away_team": "Nott'm Forest",
+      "probabilities": {
+        "home_win": 0.4962,
+        "draw": 0.2602,
+        "away_win": 0.2435
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Brentford 1518 v Nott'm Forest 1472",
+          "effect": {
+            "home_win": 0.0547,
+            "draw": -0.0074,
+            "away_win": -0.0473
+          },
+          "points": 5.5
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Brentford 1.6 v Nott'm Forest 1.1",
+          "effect": {
+            "home_win": 0.0152,
+            "draw": -0.0015,
+            "away_win": -0.0137
+          },
+          "points": 1.5
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0058,
+            "draw": 0.0025,
+            "away_win": 0.0033
+          },
+          "points": -0.6
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.6,
+          "away": 1.11
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1283
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.0957
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0946
+          }
+        ],
+        "over_2_5": 0.5103,
+        "both_teams_score": 0.5465
+      }
+    },
+    {
+      "id": "31261",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Coventry",
+      "away_team": "Sunderland",
+      "probabilities": {
+        "home_win": 0.325,
+        "draw": 0.2973,
+        "away_win": 0.3777
+      },
+      "prediction": "A",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Coventry 1395 v Sunderland 1432",
+          "effect": {
+            "home_win": -0.066,
+            "draw": 0.0167,
+            "away_win": 0.0493
+          },
+          "points": 4.9
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Coventry 0.9 v Sunderland 1.2",
+          "effect": {
+            "home_win": -0.0354,
+            "draw": 0.0114,
+            "away_win": 0.024
+          },
+          "points": 2.4
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0053,
+            "draw": 0.0017,
+            "away_win": 0.0036
+          },
+          "points": 0.4
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 0.92,
+          "away": 1.17
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1448
+          },
+          {
+            "home": 0,
+            "away": 0,
+            "probability": 0.136
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1336
+          }
+        ],
+        "over_2_5": 0.3462,
+        "both_teams_score": 0.4251
+      }
+    },
+    {
+      "id": "31262",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Hull",
+      "away_team": "Ipswich",
+      "probabilities": {
+        "home_win": 0.4677,
+        "draw": 0.2735,
+        "away_win": 0.2588
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Hull 1.8 v Ipswich 0.8",
+          "effect": {
+            "home_win": 0.0473,
+            "draw": -0.0079,
+            "away_win": -0.0394
+          },
+          "points": 4.7
+        },
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Hull 1428 v Ipswich 1415",
+          "effect": {
+            "home_win": -0.006,
+            "draw": 0.0122,
+            "away_win": -0.0062
+          },
+          "points": -0.6
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0057,
+            "draw": 0.0022,
+            "away_win": 0.0034
+          },
+          "points": -0.6
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.81,
+          "away": 0.8
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1243
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "probability": 0.121
+          },
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1156
+          }
+        ],
+        "over_2_5": 0.4834,
+        "both_teams_score": 0.4684
+      }
+    },
+    {
+      "id": "31263",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Man City",
+      "away_team": "Brighton",
+      "probabilities": {
+        "home_win": 0.5995,
+        "draw": 0.2192,
+        "away_win": 0.1813
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Man City 1642 v Brighton 1554",
+          "effect": {
+            "home_win": 0.1317,
+            "draw": -0.0377,
+            "away_win": -0.094
+          },
+          "points": 13.2
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Man City 2.1 v Brighton 1.1",
+          "effect": {
+            "home_win": 0.0415,
+            "draw": -0.0123,
+            "away_win": -0.0292
+          },
+          "points": 4.1
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0055,
+            "draw": 0.0027,
+            "away_win": 0.0028
+          },
+          "points": -0.5
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 2.06,
+          "away": 1.12
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1044
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0989
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "probability": 0.0885
+          }
+        ],
+        "over_2_5": 0.6152,
+        "both_teams_score": 0.5954
+      }
+    },
+    {
+      "id": "31266",
+      "kickoff": "2026-10-31T17:30:00Z",
+      "home_team": "Tottenham",
+      "away_team": "Crystal Palace",
+      "probabilities": {
+        "home_win": 0.4347,
+        "draw": 0.2735,
+        "away_win": 0.2917
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Tottenham 1.6 v Crystal Palace 1.2",
+          "effect": {
+            "home_win": 0.0102,
+            "draw": -0.0024,
+            "away_win": -0.0079
+          },
+          "points": 1.0
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0057,
+            "draw": 0.0022,
+            "away_win": 0.0035
+          },
+          "points": -0.6
+        },
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Tottenham 1460 v Crystal Palace 1451",
+          "effect": {
+            "home_win": -0.0018,
+            "draw": 0.0067,
+            "away_win": -0.0049
+          },
+          "points": -0.2
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.62,
+          "away": 1.21
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1259
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0936
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.0852
+          }
+        ],
+        "over_2_5": 0.5379,
+        "both_teams_score": 0.5736
+      }
+    },
+    {
+      "id": "31267",
+      "kickoff": "2026-10-31T20:00:00Z",
+      "home_team": "Aston Villa",
+      "away_team": "Fulham",
+      "probabilities": {
+        "home_win": 0.5047,
+        "draw": 0.2582,
+        "away_win": 0.2371
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Aston Villa 1528 v Fulham 1478",
+          "effect": {
+            "home_win": 0.0615,
+            "draw": -0.0098,
+            "away_win": -0.0517
+          },
+          "points": 6.1
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Aston Villa 1.6 v Fulham 1.1",
+          "effect": {
+            "home_win": 0.0169,
+            "draw": -0.0012,
+            "away_win": -0.0157
+          },
+          "points": 1.7
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0058,
+            "draw": 0.0026,
+            "away_win": 0.0032
+          },
+          "points": -0.6
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.6,
+          "away": 1.08
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1291
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.0947
+          }
+        ],
+        "over_2_5": 0.4993,
+        "both_teams_score": 0.5356
+      }
+    },
+    {
+      "id": "31268",
+      "kickoff": "2026-11-01T16:30:00Z",
+      "home_team": "Liverpool",
+      "away_team": "Arsenal",
+      "probabilities": {
+        "home_win": 0.3318,
+        "draw": 0.2579,
+        "away_win": 0.4104
+      },
+      "prediction": "A",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Liverpool 1568 v Arsenal 1642",
+          "effect": {
+            "home_win": -0.0581,
+            "draw": -0.0131,
+            "away_win": 0.0712
+          },
+          "points": 7.1
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Liverpool 1.1 v Arsenal 1.5",
+          "effect": {
+            "home_win": -0.0365,
+            "draw": 0.0018,
+            "away_win": 0.0347
+          },
+          "points": 3.5
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0054,
+            "draw": 0.0015,
+            "away_win": 0.0039
+          },
+          "points": 0.4
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.09,
+          "away": 1.47
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1347
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1026
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "probability": 0.091
+          }
+        ],
+        "over_2_5": 0.4718,
+        "both_teams_score": 0.5224
+      }
+    },
+    {
+      "id": "31269",
+      "kickoff": "2026-11-02T20:00:00Z",
+      "home_team": "Newcastle",
+      "away_team": "Everton",
+      "probabilities": {
+        "home_win": 0.4505,
+        "draw": 0.2692,
+        "away_win": 0.2802
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Newcastle 1.6 v Everton 1.1",
+          "effect": {
+            "home_win": 0.0148,
+            "draw": -0.0005,
+            "away_win": -0.0143
+          },
+          "points": 1.5
+        },
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Newcastle 1494 v Everton 1484",
+          "effect": {
+            "home_win": 0.0094,
+            "draw": 0.0006,
+            "away_win": -0.0099
+          },
+          "points": 0.9
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0058,
+            "draw": 0.0022,
+            "away_win": 0.0035
+          },
+          "points": -0.6
+        }
+      ],
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.57,
+          "away": 1.08
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1305
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1007
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "probability": 0.094
+          }
+        ],
+        "over_2_5": 0.4929,
+        "both_teams_score": 0.5327
+      }
+    }
+  ]
+}

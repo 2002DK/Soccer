@@ -1,13 +1,15 @@
-name: Weekly data refresh
+name: Daily data refresh
 
-# Downloads the latest results, rebuilds features, refits the production model
-# and pushes the result. Render redeploys the API when these files change.
-# The model keeps the hyperparameters chosen in Phase 3 (ml/models/<league>/metrics.json);
-# the model comparison is not re-run.
+# Every morning: download the latest results, and if there are new ones, update
+# Elo ratings, rebuild features and refit the production model. Then refresh the
+# predictions for the next 7 days' fixtures. Commits and pushes only when a file
+# changed; Render redeploys the API when these files change.
+# The model keeps the settings chosen in its comparison (ml/models/<league>/metrics.json);
+# the comparison itself is not re-run.
 
 on:
   schedule:
-    - cron: "0 6 * * 2" # Tuesdays 06:00 UTC, after weekend and Monday matches
+    - cron: "0 6 * * *" # 06:00 UTC daily; GitHub may start scheduled runs late
   workflow_dispatch:
 
 permissions:
@@ -40,7 +42,7 @@ jobs:
         run: python ml/scripts/pipeline.py --league "$LEAGUE" --steps download,clean
 
       - name: Check for new matches
-        id: changes
+        id: results
         run: |
           if git diff --quiet -- ml/data/$LEAGUE/processed/matches.csv; then
             echo "No new matches since the last refresh."
@@ -51,21 +53,40 @@ jobs:
           fi
 
       - name: Update Elo ratings, rebuild features and refit model
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.results.outputs.changed == 'true'
         run: python ml/scripts/pipeline.py --league "$LEAGUE" --steps elo,features,fit
 
+      - name: Predict the next 7 days' fixtures
+        run: python ml/scripts/pipeline.py --league "$LEAGUE" --steps fixtures
+
+      - name: Check for changed files
+        id: files
+        run: |
+          git add -A ml/data/$LEAGUE/processed ml/models/$LEAGUE
+          if git diff --cached --quiet; then
+            echo "Nothing changed; no commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff --cached --stat
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Test the pipeline code and the API against the new data
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.files.outputs.changed == 'true'
         run: |
           python -m pytest -q ml/tests
           cd backend && python -m pytest -q
 
       - name: Commit and push
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.files.outputs.changed == 'true'
         run: |
-          last=$(python -c "import pandas as pd; print(pd.read_csv('ml/data/$LEAGUE/processed/matches.csv')['date'].max())")
+          if [ "${{ steps.results.outputs.changed }}" = "true" ]; then
+            last=$(python -c "import pandas as pd; print(pd.read_csv('ml/data/$LEAGUE/processed/matches.csv')['date'].max())")
+            msg="Refresh data: results up to $last"
+          else
+            msg="Update predictions for the next 7 days"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ml/data/$LEAGUE/processed ml/models/$LEAGUE
-          git commit -m "Refresh data: results up to $last"
+          git commit -m "$msg"
           git push

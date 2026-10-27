@@ -10,6 +10,7 @@ Steps, in order:
 - features: build features.csv
 - compare:  tune and score every candidate model, V1 then V2 (slow; not run by default)
 - fit:      refit the production model on all seasons and save it
+- fixtures: list upcoming fixtures and store predictions for the next 7 days
 
 compare needs a full training environment (XGBoost); the other steps also
 run in the scheduled refresh job.
@@ -24,8 +25,8 @@ import download_xg
 import elo
 from leagues import add_league_argument
 
-STEPS = ["download", "clean", "elo", "features", "compare", "fit"]
-DEFAULT_STEPS = ["download", "clean", "elo", "features", "fit"]
+STEPS = ["download", "clean", "elo", "features", "compare", "fit", "fixtures"]
+DEFAULT_STEPS = ["download", "clean", "elo", "features", "fit", "fixtures"]
 
 
 def run_step(step: str, league) -> None:
@@ -46,6 +47,9 @@ def run_step(step: str, league) -> None:
     elif step == "fit":
         import save_model
         save_model.run(league)
+    elif step == "fixtures":
+        import fixtures
+        fixtures.run(league)
 
 
 def parse_steps(value: str) -> list[str]:

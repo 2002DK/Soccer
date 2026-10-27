@@ -78,6 +78,11 @@ class Predictor:
             proba = b["model"].predict_proba(X)[0]
         return dict(zip(self.labels, proba.round(4).tolist()))
 
+    def scorelines(self, home_team: str, away_team: str) -> dict | None:
+        """Expected goals, likely scorelines, over 2.5 and both teams to score (V2 models with Dixon-Coles)."""
+        dc = self.bundle.get("dc")
+        return dc.summary(home_team, away_team) if dc is not None else None
+
     def explain(self, home_team: str, away_team: str, on: Date | None = None) -> dict:
         """Probabilities plus the drivers behind them (explain.py)."""
         from explain import explain

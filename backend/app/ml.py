@@ -19,6 +19,15 @@ def get_predictor(league_code: str = DEFAULT_LEAGUE) -> Predictor:
 
 
 @cache
+def get_upcoming(league_code: str = DEFAULT_LEAGUE) -> dict:
+    """Stored predictions for the next 7 days' fixtures, written by the daily job (fixtures.py)."""
+    path = get_league(league_code).processed_dir / "upcoming.json"
+    if not path.exists():
+        return {"fixtures": []}
+    return json.loads(path.read_text())
+
+
+@cache
 def get_model_info(league_code: str = DEFAULT_LEAGUE) -> dict:
     """The production model and every model's test scores, V1 and V2, in one list.
 

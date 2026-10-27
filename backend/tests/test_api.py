@@ -80,3 +80,14 @@ def test_models():
     if body["v2"]:
         assert body["v2"]["production"]["model"] == production["model"]
         assert all(r["calibration"] for r in body["v2"]["results"])
+
+
+def test_fixtures(teams):
+    body = client.get("/fixtures").json()
+    for f in body["fixtures"]:
+        assert f["home_team"] in teams and f["away_team"] in teams
+        assert sum(f["probabilities"].values()) == pytest.approx(1, abs=1e-3)
+        assert f["kickoff"].endswith("Z")
+        assert f["scorelines"]["scorelines"]
+    kickoffs = [f["kickoff"] for f in body["fixtures"]]
+    assert kickoffs == sorted(kickoffs)
