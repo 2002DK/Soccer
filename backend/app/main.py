@@ -16,7 +16,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from .ml import get_model_info, get_predictor, get_upcoming
+from .ml import get_accuracy, get_model_info, get_predictor, get_upcoming
 from .stats import team_stats
 
 DEFAULT_ORIGINS = "http://localhost:3000,http://localhost:5173,https://2002dk.github.io"
@@ -124,6 +124,12 @@ def predict(req: PredictRequest) -> PredictResponse:
 def fixtures() -> dict:
     """Predictions for matches in the next 7 days, worked out by the daily job (kick-off times in UTC)."""
     return get_upcoming()
+
+
+@app.get("/accuracy")
+def accuracy() -> dict:
+    """How predictions frozen before kick-off have done: scores, baselines, by week and per match."""
+    return get_accuracy()
 
 
 @app.get("/models")

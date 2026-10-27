@@ -91,3 +91,9 @@ def test_fixtures(teams):
         assert f["scorelines"]["scorelines"]
     kickoffs = [f["kickoff"] for f in body["fixtures"]]
     assert kickoffs == sorted(kickoffs)
+
+
+def test_accuracy():
+    body = client.get("/accuracy").json()
+    assert body["frozen"] >= body["scored"] >= 0
+    assert len(body["matches"]) == body["frozen"]

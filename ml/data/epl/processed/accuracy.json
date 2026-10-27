@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-10-27T18:57:07Z",
+  "league": "epl",
+  "tracking_since": null,
+  "frozen": 0,
+  "scored": 0,
+  "awaiting_result": 0,
+  "missed": 0,
+  "model": {
+    "accuracy": null,
+    "log_loss": null,
+    "brier": null
+  },
+  "baselines": {
+    "elo_only": {
+      "accuracy": null,
+      "log_loss": null,
+      "brier": null
+    },
+    "always_home": {
+      "accuracy": null
+    }
+  },
+  "by_week": [],
+  "matches": []
+}

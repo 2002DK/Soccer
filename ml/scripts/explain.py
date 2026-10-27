@@ -95,6 +95,7 @@ def explain(predictor, home_team: str, away_team: str, on=None, top: int = 5) ->
         "probabilities": dict(zip(predictor.labels, base.round(4).tolist())),
         "predicted": predicted,
         "why": drivers[:top],
+        "elo": {"home": round(float(row["home_elo"]), 1), "away": round(float(row["away_elo"]), 1)},
     }
 
 

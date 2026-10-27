@@ -79,6 +79,7 @@ def predict_upcoming(league: League, fixtures: pd.DataFrame, now: datetime) -> d
             "probabilities": {OUTCOME_KEYS[k]: v for k, v in proba.items()},
             "prediction": result["predicted"],
             "why": result["why"],
+            "elo": result["elo"],  # pre-match ratings, frozen with the prediction for the Elo-only baseline
             "scorelines": p.scorelines(f.home_team, f.away_team),
         })
 

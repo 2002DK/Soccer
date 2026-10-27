@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T18:46:07Z",
+  "generated_at": "2026-10-27T18:54:40Z",
   "league": "epl",
   "season": "2026-27",
   "data_through": "2026-10-25",
@@ -52,6 +52,10 @@
           "points": -0.2
         }
       ],
+      "elo": {
+        "home": 1513.9,
+        "away": 1519.8
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.79,
@@ -124,6 +128,10 @@
           "points": 0.5
         }
       ],
+      "elo": {
+        "home": 1527.0,
+        "away": 1480.1
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.49,
@@ -196,6 +204,10 @@
           "points": -0.6
         }
       ],
+      "elo": {
+        "home": 1518.5,
+        "away": 1471.5
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.6,
@@ -268,6 +280,10 @@
           "points": 0.4
         }
       ],
+      "elo": {
+        "home": 1394.9,
+        "away": 1431.7
+      },
       "scorelines": {
         "expected_goals": {
           "home": 0.92,
@@ -340,6 +356,10 @@
           "points": -0.6
         }
       ],
+      "elo": {
+        "home": 1428.4,
+        "away": 1414.7
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.81,
@@ -412,6 +432,10 @@
           "points": -0.5
         }
       ],
+      "elo": {
+        "home": 1641.6,
+        "away": 1553.6
+      },
       "scorelines": {
         "expected_goals": {
           "home": 2.06,
@@ -484,6 +508,10 @@
           "points": -0.2
         }
       ],
+      "elo": {
+        "home": 1459.8,
+        "away": 1450.9
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.62,
@@ -556,6 +584,10 @@
           "points": -0.6
         }
       ],
+      "elo": {
+        "home": 1528.4,
+        "away": 1477.6
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.6,
@@ -628,6 +660,10 @@
           "points": 0.4
         }
       ],
+      "elo": {
+        "home": 1567.7,
+        "away": 1641.9
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.09,
@@ -700,6 +736,10 @@
           "points": -0.6
         }
       ],
+      "elo": {
+        "home": 1494.0,
+        "away": 1483.8
+      },
       "scorelines": {
         "expected_goals": {
           "home": 1.57,

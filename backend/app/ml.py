@@ -28,6 +28,15 @@ def get_upcoming(league_code: str = DEFAULT_LEAGUE) -> dict:
 
 
 @cache
+def get_accuracy(league_code: str = DEFAULT_LEAGUE) -> dict:
+    """Live accuracy of predictions frozen before kick-off, written by the daily job (tracker.py)."""
+    path = get_league(league_code).processed_dir / "accuracy.json"
+    if not path.exists():
+        return {"frozen": 0, "scored": 0, "matches": []}
+    return json.loads(path.read_text())
+
+
+@cache
 def get_model_info(league_code: str = DEFAULT_LEAGUE) -> dict:
     """The production model and every model's test scores, V1 and V2, in one list.
 
