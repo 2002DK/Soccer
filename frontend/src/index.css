@@ -467,3 +467,4 @@ a { color: var(--accent); }
   font-size: 0.85rem;
   color: var(--muted);
 }
+.why-note { font-size: 0.8rem; color: var(--muted); margin: 6px 0 0; }

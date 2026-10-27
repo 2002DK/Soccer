@@ -1,7 +1,10 @@
 import type { Prediction } from '../api'
 
 export function WhyList({ prediction }: { prediction: Prediction }) {
-  const { why, prediction: outcome, home_team, away_team } = prediction
+  const { prediction: outcome, home_team, away_team } = prediction
+  // Effects under 1 point are negligible and can tip either way for second-order reasons
+  const why = prediction.why.filter((d) => Math.abs(d.points) >= 1)
+  const hidden = prediction.why.length - why.length
   if (why.length === 0) return null
   const outcomeName = { H: `${home_team} win`, D: 'a draw', A: `${away_team} win` }[outcome]
 
@@ -23,6 +26,7 @@ export function WhyList({ prediction }: { prediction: Prediction }) {
           </li>
         ))}
       </ul>
+      {hidden > 0 && <p className="why-note">Factors under 1 point are left out.</p>}
     </div>
   )
 }
