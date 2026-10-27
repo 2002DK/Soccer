@@ -1,7 +1,8 @@
-import type { Prediction } from '../api'
+import type { MatchPrediction } from '../api'
 import { pct } from '../format'
 
-export function ProbabilityBar({ prediction }: { prediction: Prediction }) {
+/** Home / draw / away as one bar. `compact` drops the legend for use in lists. */
+export function ProbabilityBar({ prediction, compact = false }: { prediction: MatchPrediction; compact?: boolean }) {
   const { probabilities: p, home_team, away_team } = prediction
   const segments = [
     { key: 'home', label: `${home_team} win`, value: p.home_win },
@@ -10,7 +11,7 @@ export function ProbabilityBar({ prediction }: { prediction: Prediction }) {
   ]
 
   return (
-    <div className="prob">
+    <div className={compact ? 'prob prob-compact' : 'prob'}>
       <div className="prob-bar" role="img" aria-label={segments.map((s) => `${s.label} ${pct(s.value)}`).join(', ')}>
         {segments.map((s) => (
           <div
@@ -24,15 +25,17 @@ export function ProbabilityBar({ prediction }: { prediction: Prediction }) {
           </div>
         ))}
       </div>
-      <ul className="prob-legend">
-        {segments.map((s) => (
-          <li key={s.key}>
-            <span className={`swatch prob-${s.key}`} aria-hidden="true" />
-            <span className="prob-legend-label">{s.label}</span>
-            <strong>{pct(s.value)}</strong>
-          </li>
-        ))}
-      </ul>
+      {!compact && (
+        <ul className="prob-legend">
+          {segments.map((s) => (
+            <li key={s.key}>
+              <span className={`swatch prob-${s.key}`} aria-hidden="true" />
+              <span className="prob-legend-label">{s.label}</span>
+              <strong>{pct(s.value)}</strong>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

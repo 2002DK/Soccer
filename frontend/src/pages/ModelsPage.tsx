@@ -1,14 +1,16 @@
 import { useState } from 'react'
-import { api, type ModelResult, type ModelsResponse } from '../api'
+import { api, type CalibrationBand, type ModelResult, type ModelsResponse } from '../api'
 import { ErrorMessage, Loading } from '../components/Status'
-import { pct } from '../format'
+import { pct, signed } from '../format'
 import { useLoad } from '../hooks'
+import { useLeague } from '../league'
 
 const FEATURE_SET_NAME = { base: 'V1, without xG', xg: 'V1, with xG', v2: 'V2' }
 const OUTCOMES = ['Home win', 'Draw', 'Away win']
 
 export function ModelsPage() {
-  const models = useLoad(() => api.models(), [])
+  const league = useLeague()
+  const models = useLoad(() => api.models(league.code), [league.code])
 
   if (!models || models.status === 'loading') return <Loading label="Loading model results…" />
   if (models.status === 'error') return <ErrorMessage error={models.error} />
@@ -95,6 +97,7 @@ function ModelsReport({ data }: { data: ModelsResponse }) {
           models within a point or two of each other are effectively tied. It is now trained on all{' '}
           {production.trained_on.matches.toLocaleString()} matches since {production.trained_on.first_season}.
         </p>
+        <CalibrationSection data={data} />
         <h3>Predicted vs actual results</h3>
         <ConfusionMatrix matrix={chosen.confusion_matrix} />
         {neverDraws && (
@@ -202,6 +205,92 @@ function ConfusionMatrix({ matrix }: { matrix: number[][] }) {
           })}
         </tbody>
       </table>
+    </div>
+  )
+}
+
+function CalibrationSection({ data }: { data: ModelsResponse }) {
+  const v2 = data.v2
+  if (!v2) return null
+  const chosen = v2.results.find((r) => r.model === v2.production.model && r.calibrated === v2.production.calibrated)
+  if (!chosen) return null
+  const bands = chosen.calibration.filter((b) => b.outcome === 'H')
+  const lean = chosen.mean_predicted.H - chosen.actual_share.H
+  return (
+    <>
+      <h3>Are the home-win chances honest?</h3>
+      <p>
+        Test matches are grouped by the home-win chance the model gave them, and each group's prediction is compared
+        with how often the home side actually won. On average the model gave home teams {pct(chosen.mean_predicted.H, 1)}{' '}
+        against {pct(chosen.actual_share.H, 1)} that won ({signed(lean * 100)} points). Bars show the range random noise
+        alone could produce (two standard errors); a dot whose bar crosses the diagonal is in line with the results.
+      </p>
+      <CalibrationChart bands={bands} />
+    </>
+  )
+}
+
+const CW = 320
+const CH = 320
+const M = { top: 12, right: 12, bottom: 40, left: 44 }
+const AX = 0.8 // both axes run from 0 to 80%
+
+function CalibrationChart({ bands }: { bands: CalibrationBand[] }) {
+  const [hovered, setHovered] = useState<CalibrationBand | null>(null)
+  const x = (v: number) => M.left + (v / AX) * (CW - M.left - M.right)
+  const y = (v: number) => CH - M.bottom - (Math.min(v, AX) / AX) * (CH - M.top - M.bottom)
+  const ticks = [0, 0.2, 0.4, 0.6, 0.8]
+
+  return (
+    <div className="calibration">
+      <svg
+        viewBox={`0 0 ${CW} ${CH}`}
+        className="calibration-svg"
+        role="img"
+        aria-label="Predicted home-win chance against actual home-win rate, by probability band"
+      >
+        {ticks.map((t) => (
+          <g key={t}>
+            <line className="cal-grid" x1={x(t)} x2={x(t)} y1={y(0)} y2={y(AX)} />
+            <line className="cal-grid" x1={x(0)} x2={x(AX)} y1={y(t)} y2={y(t)} />
+            <text className="cal-tick" x={x(t)} y={y(0) + 16} textAnchor="middle">{pct(t)}</text>
+            <text className="cal-tick" x={x(0) - 6} y={y(t) + 4} textAnchor="end">{pct(t)}</text>
+          </g>
+        ))}
+        <line className="cal-diagonal" x1={x(0)} y1={y(0)} x2={x(AX)} y2={y(AX)} />
+        <text className="cal-axis" x={(x(0) + x(AX)) / 2} y={CH - 6} textAnchor="middle">
+          Predicted home-win chance
+        </text>
+        <text className="cal-axis" transform={`translate(12 ${(y(0) + y(AX)) / 2}) rotate(-90)`} textAnchor="middle">
+          Home sides that won
+        </text>
+        {bands.map((b) => (
+          <g
+            key={b.band}
+            className="cal-point"
+            tabIndex={0}
+            onMouseEnter={() => setHovered(b)}
+            onMouseLeave={() => setHovered(null)}
+            onFocus={() => setHovered(b)}
+            onBlur={() => setHovered(null)}
+          >
+            <line
+              className="cal-whisker"
+              x1={x(b.predicted)}
+              x2={x(b.predicted)}
+              y1={y(Math.max(0, b.actual - 2 * b.standard_error))}
+              y2={y(b.actual + 2 * b.standard_error)}
+            />
+            <circle cx={x(b.predicted)} cy={y(b.actual)} r={5} />
+            <circle className="cal-hit" cx={x(b.predicted)} cy={y(b.actual)} r={14} />
+          </g>
+        ))}
+      </svg>
+      <p className="cal-readout" aria-live="polite">
+        {hovered
+          ? `Band ${hovered.band.replace('-', '–')}: ${hovered.n} matches, predicted ${pct(hovered.predicted, 1)}, home side won ${pct(hovered.actual, 1)}`
+          : 'Hover or tab to a dot for its numbers.'}
+      </p>
     </div>
   )
 }

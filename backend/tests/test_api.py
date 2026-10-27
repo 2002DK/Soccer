@@ -97,3 +97,28 @@ def test_accuracy():
     body = client.get("/accuracy").json()
     assert body["frozen"] >= body["scored"] >= 0
     assert len(body["matches"]) == body["frozen"]
+
+
+def test_leagues_and_scoped_routes():
+    leagues = client.get("/leagues").json()
+    assert any(lg["code"] == "epl" for lg in leagues)
+    assert client.get("/leagues/nope/teams").status_code == 404
+    # V1 routes answer for the Premier League
+    assert client.get("/leagues/epl/teams").json() == client.get("/teams").json()
+
+
+def test_ratings():
+    body = client.get("/leagues/epl/ratings").json()
+    ranks = [r["rank"] for r in body["ratings"]]
+    assert ranks == list(range(1, len(ranks) + 1))
+    elos = [r["elo"] for r in body["ratings"]]
+    assert elos == sorted(elos, reverse=True)
+    for r in body["ratings"]:
+        assert r["trend"][-1]["elo"] == pytest.approx(r["elo"], abs=0.1)
+
+
+def test_predict_includes_scorelines(teams):
+    body = client.post("/leagues/epl/predict", json={"home_team": teams[0], "away_team": teams[1]}).json()
+    sc = body["scorelines"]
+    assert len(sc["grid"]) == 6 and all(len(row) == 6 for row in sc["grid"])
+    assert 0 < sc["over_2_5"] < 1 and 0 < sc["both_teams_score"] < 1

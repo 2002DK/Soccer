@@ -1,6 +1,6 @@
-import type { Prediction } from '../api'
+import type { MatchPrediction } from '../api'
 
-export function WhyList({ prediction }: { prediction: Prediction }) {
+export function WhyList({ prediction }: { prediction: MatchPrediction }) {
   const { prediction: outcome, home_team, away_team } = prediction
   // Effects under 1 point are negligible and can tip either way for second-order reasons
   const why = prediction.why.filter((d) => Math.abs(d.points) >= 1)

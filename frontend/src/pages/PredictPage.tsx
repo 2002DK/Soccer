@@ -1,33 +1,46 @@
 import { useState } from 'react'
 import { api, type Prediction, type TeamsResponse } from '../api'
 import { ProbabilityBar } from '../components/ProbabilityBar'
-import { WhyList } from '../components/WhyList'
+import { Scorelines } from '../components/Scorelines'
 import { StatsCard } from '../components/StatsCard'
 import { ErrorMessage, Loading } from '../components/Status'
+import { WhyList } from '../components/WhyList'
 import { longDate } from '../format'
+import { headline } from '../headline'
 import { useLoad } from '../hooks'
+import { useLeague } from '../league'
 
-export function PredictPage({ teams }: { teams: TeamsResponse }) {
+/** Custom match: any two teams in the league, predicted on request. */
+export function PredictPage() {
+  const league = useLeague()
+  const teams = useLoad(() => api.teams(league.code), [league.code])
+
+  if (!teams || teams.status === 'loading') return <Loading label="Loading teams…" />
+  if (teams.status === 'error') return <ErrorMessage error={teams.error} />
+  return <CustomMatch key={league.code} teams={teams.data} />
+}
+
+function CustomMatch({ teams }: { teams: TeamsResponse }) {
+  const league = useLeague()
   const [home, setHome] = useState('')
   const [away, setAway] = useState('')
   const [requested, setRequested] = useState<[string, string] | null>(null)
 
   const prediction = useLoad<Prediction>(
-    requested && (() => api.predict(...requested)),
-    [requested?.[0], requested?.[1]],
+    requested && (() => api.predict(league.code, ...requested)),
+    [league.code, requested?.[0], requested?.[1]],
   )
   // A prediction is only shown for the teams it was made for
   const showPrediction = requested && requested[0] === home && requested[1] === away
-
   const canPredict = home !== '' && away !== '' && home !== away
 
   return (
     <>
       <section className="intro">
-        <h1>Who wins?</h1>
+        <h1>Custom match</h1>
         <p>
-          Pick two {teams.season} Premier League teams to see their season so far and the model's odds
-          of a home win, draw or away win.
+          Pick any two {teams.season} {league.name} teams to see their season so far and the model's odds of a home
+          win, draw or away win, as if they played next.
         </p>
       </section>
 
@@ -53,9 +66,9 @@ export function PredictPage({ teams }: { teams: TeamsResponse }) {
               <h2>{headline(prediction.data)}</h2>
               <ProbabilityBar prediction={prediction.data} />
               <WhyList prediction={prediction.data} />
+              <Scorelines prediction={prediction.data} />
               <p className="footnote">
-                Model: {prediction.data.model}, trained on Premier League matches since 2006-07, using results up to{' '}
-                {longDate(teams.data_through)}.
+                Model: {prediction.data.model}, using {league.name} results up to {longDate(teams.data_through)}.
               </p>
             </>
           )}
@@ -73,7 +86,8 @@ function TeamColumn(props: {
   onChange: (team: string) => void
 }) {
   const { side, team, other, teams, onChange } = props
-  const stats = useLoad(team ? () => api.stats(team) : null, [team])
+  const league = useLeague()
+  const stats = useLoad(team ? () => api.stats(league.code, team) : null, [league.code, team])
   const id = `team-${side.toLowerCase()}`
 
   return (
@@ -95,14 +109,4 @@ function TeamColumn(props: {
       {stats?.status === 'ready' && <StatsCard stats={stats.data} />}
     </div>
   )
-}
-
-function headline({ probabilities: p, home_team, away_team }: Prediction): string {
-  const ranked = [
-    { text: `${home_team} win`, value: p.home_win },
-    { text: 'Draw', value: p.draw },
-    { text: `${away_team} win`, value: p.away_win },
-  ].sort((a, b) => b.value - a.value)
-  // Within 5 points of the runner-up the model has no real favourite
-  return ranked[0].value - ranked[1].value < 0.05 ? 'Too close to call' : `Most likely: ${ranked[0].text}`
 }

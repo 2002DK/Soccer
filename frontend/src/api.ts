@@ -1,8 +1,16 @@
-// Client for the FastAPI backend (backend/app/main.py)
+// Client for the FastAPI backend (backend/app/main.py). Every call is scoped to a league.
 
 const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/$/, '')
 
 export type Outcome = 'H' | 'D' | 'A'
+export type Probabilities = { home_win: number; draw: number; away_win: number }
+
+export interface League {
+  code: string
+  name: string
+  season: string
+  data_through: string
+}
 
 export interface TeamsResponse {
   season: string
@@ -36,24 +44,96 @@ export interface TeamStats {
   xg_for: number | null
   xg_against: number | null
   form: FormMatch[]
-}
-
-export interface Prediction {
-  home_team: string
-  away_team: string
-  date: string
-  probabilities: { home_win: number; draw: number; away_win: number }
-  prediction: Outcome
-  model: string
-  why: Driver[]
+  elo: { rating: number; rank: number; season_change: number } | null
 }
 
 export interface Driver {
   driver: string
   label: string
   detail: string
-  effect: { home_win: number; draw: number; away_win: number }
+  effect: Probabilities
   points: number // percentage points on the most likely outcome
+}
+
+export interface Scorelines {
+  expected_goals: { home: number; away: number }
+  scorelines: { home: number; away: number; probability: number }[]
+  over_2_5: number
+  both_teams_score: number
+  grid: number[][] // P(home i, away j), rows are home goals
+}
+
+/** What every prediction has, whether made on request or stored for a fixture */
+export interface MatchPrediction {
+  home_team: string
+  away_team: string
+  probabilities: Probabilities
+  prediction: Outcome
+  why: Driver[]
+  scorelines: Scorelines | null
+}
+
+export interface Prediction extends MatchPrediction {
+  date: string
+  model: string
+}
+
+export interface Fixture extends MatchPrediction {
+  id: string
+  kickoff: string // UTC, ISO 8601
+}
+
+export interface Upcoming {
+  generated_at?: string
+  data_through?: string
+  model?: string
+  window_days?: number
+  fixtures: Fixture[]
+}
+
+export interface Rating {
+  rank: number
+  team: string
+  elo: number
+  season_change: number
+  trend: { date: string | null; elo: number }[]
+}
+
+export interface RatingsResponse {
+  season: string
+  ratings: Rating[]
+}
+
+export interface Scores {
+  accuracy: number | null
+  log_loss: number | null
+  brier: number | null
+}
+
+export interface TrackedMatch {
+  fixture_id: string
+  kickoff: string
+  home_team: string
+  away_team: string
+  frozen_at: string
+  probabilities: Probabilities
+  predicted: Outcome
+  top_scoreline: string
+  result: Outcome | null
+  score: string | null
+  correct: boolean | null
+}
+
+export interface Accuracy {
+  tracking_since: string | null
+  frozen: number
+  scored: number
+  awaiting_result?: number
+  missed?: number
+  model?: Scores
+  baselines?: { elo_only: Scores; always_home: { accuracy: number | null } }
+  by_week?: ({ week_from: string; matches: number } & Scores)[]
+  matches: TrackedMatch[]
 }
 
 export interface ModelResult {
@@ -71,6 +151,15 @@ export interface ModelResult {
   baseline: { always_home_accuracy: number; class_prior_log_loss: number }
 }
 
+export interface CalibrationBand {
+  outcome: Outcome
+  band: string
+  n: number
+  predicted: number
+  actual: number
+  standard_error: number
+}
+
 export interface ModelsResponse {
   production: {
     model: string
@@ -80,6 +169,15 @@ export interface ModelsResponse {
     trained_on: { matches: number; first_season: string; last_match: string }
   }
   comparison: ModelResult[]
+  v2: {
+    production: { model: string; calibrated: boolean }
+    results: (Omit<ModelResult, 'feature_set' | 'baseline'> & {
+      calibrated: boolean
+      calibration: CalibrationBand[]
+      mean_predicted: Record<Outcome, number>
+      actual_share: Record<Outcome, number>
+    })[]
+  } | null
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -96,14 +194,21 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json()
 }
 
+const scoped = (league: string, path: string) => `/leagues/${encodeURIComponent(league)}${path}`
+
 export const api = {
-  teams: () => request<TeamsResponse>('/teams'),
-  stats: (team: string) => request<TeamStats>(`/teams/${encodeURIComponent(team)}/stats`),
-  predict: (homeTeam: string, awayTeam: string) =>
-    request<Prediction>('/predict', {
+  leagues: () => request<League[]>('/leagues'),
+  teams: (league: string) => request<TeamsResponse>(scoped(league, '/teams')),
+  stats: (league: string, team: string) =>
+    request<TeamStats>(scoped(league, `/teams/${encodeURIComponent(team)}/stats`)),
+  predict: (league: string, homeTeam: string, awayTeam: string) =>
+    request<Prediction>(scoped(league, '/predict'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ home_team: homeTeam, away_team: awayTeam }),
     }),
-  models: () => request<ModelsResponse>('/models'),
+  fixtures: (league: string) => request<Upcoming>(scoped(league, '/fixtures')),
+  ratings: (league: string) => request<RatingsResponse>(scoped(league, '/ratings')),
+  accuracy: (league: string) => request<Accuracy>(scoped(league, '/accuracy')),
+  models: (league: string) => request<ModelsResponse>(scoped(league, '/models')),
 }

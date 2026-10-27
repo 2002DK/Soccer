@@ -24,6 +24,7 @@ from scipy.stats import poisson
 from sklearn.linear_model import PoissonRegressor
 
 MAX_GOALS = 10  # score grid is 0..MAX_GOALS for each side
+GRID_GOALS = 5  # the grid shown on the site: 0..5 goals each
 WINDOW_DAYS = 4 * 365  # matches older than this are left out of a fit
 NEW_TEAM_QUANTILE = 0.25  # unseen teams get this quantile's attack (and the mirror quantile's defence)
 
@@ -73,6 +74,8 @@ class DixonColes:
             ],
             "over_2_5": round(float(grid[i + j > 2].sum()), 4),
             "both_teams_score": round(float(grid[1:, 1:].sum()), 4),
+            # P(home i, away j) for 0..GRID_GOALS goals each; rows are home goals
+            "grid": grid[:GRID_GOALS + 1, :GRID_GOALS + 1].round(4).tolist(),
         }
 
 

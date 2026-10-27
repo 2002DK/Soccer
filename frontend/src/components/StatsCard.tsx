@@ -1,5 +1,5 @@
 import type { TeamStats } from '../api'
-import { ordinal } from '../format'
+import { ordinal, signed } from '../format'
 
 const OUTCOME_NAME = { W: 'Win', D: 'Draw', L: 'Loss' }
 
@@ -17,6 +17,14 @@ export function StatsCard({ stats }: { stats: TeamStats }) {
       </div>
 
       <dl className="stats-grid">
+        {stats.elo && (
+          <div>
+            <dt>Elo rating</dt>
+            <dd>
+              {Math.round(stats.elo.rating)} <span className="muted">({ordinal(stats.elo.rank)}, {signed(stats.elo.season_change, 0)} this season)</span>
+            </dd>
+          </div>
+        )}
         <div>
           <dt>Scored / game</dt>
           <dd>{stats.goals_for_per_game?.toFixed(2) ?? '–'}</dd>

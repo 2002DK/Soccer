@@ -8,8 +8,44 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "ml" / "scripts"))
 
-from leagues import DEFAULT_LEAGUE, get_league  # noqa: E402
+import pandas as pd  # noqa: E402
+
+from leagues import DEFAULT_LEAGUE, LEAGUES, get_league  # noqa: E402
 from predict import Predictor  # noqa: E402
+
+
+def league_codes() -> list[str]:
+    """Leagues whose model has been built (so a fresh registry entry without data is left out)."""
+    return [code for code, league in LEAGUES.items() if league.model_path.exists()]
+
+
+@cache
+def get_ratings(league_code: str = DEFAULT_LEAGUE) -> dict:
+    """Current Elo ratings, best first, with each team's rating after every match this season."""
+    league = get_league(league_code)
+    table = pd.read_csv(league.processed_dir / "ratings.csv")
+    history = pd.read_csv(league.processed_dir / "elo.csv")
+    season = history["season"].max()
+    current = history[history["season"] == season]
+
+    trends: dict[str, list] = {}
+    for r in current.itertuples(index=False):
+        for team, pre, post in ((r.home_team, r.home_elo_pre, r.home_elo_post), (r.away_team, r.away_elo_pre, r.away_elo_post)):
+            if team not in trends:
+                trends[team] = [{"date": None, "elo": pre}]  # season start, after the summer reset
+            trends[team].append({"date": r.date, "elo": post})
+
+    return {
+        "season": season,
+        "ratings": [
+            {
+                "rank": int(t.rank), "team": t.team, "elo": float(t.elo),
+                "season_change": round(float(t.elo) - trends[t.team][0]["elo"], 1) if t.team in trends else 0.0,
+                "trend": trends.get(t.team, []),
+            }
+            for t in table.itertuples(index=False)
+        ],
+    }
 
 
 @cache
