@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-27T18:57:07Z",
+  "generated_at": "2026-10-30T11:47:54Z",
   "league": "epl",
-  "tracking_since": null,
-  "frozen": 0,
+  "tracking_since": "2026-10-30T11:47:54Z",
+  "frozen": 8,
   "scored": 0,
-  "awaiting_result": 0,
+  "awaiting_result": 8,
   "missed": 0,
   "model": {
     "accuracy": null,
@@ -22,5 +22,142 @@
     }
   },
   "by_week": [],
-  "matches": []
+  "matches": [
+    {
+      "fixture_id": "31267",
+      "kickoff": "2026-10-31T20:00:00Z",
+      "home_team": "Aston Villa",
+      "away_team": "Fulham",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.5047,
+        "draw": 0.2582,
+        "away_win": 0.2371
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31266",
+      "kickoff": "2026-10-31T17:30:00Z",
+      "home_team": "Tottenham",
+      "away_team": "Crystal Palace",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.4347,
+        "draw": 0.2735,
+        "away_win": 0.2917
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31264",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Bournemouth",
+      "away_team": "Leeds",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.4884,
+        "draw": 0.261,
+        "away_win": 0.2506
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31265",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Brentford",
+      "away_team": "Nott'm Forest",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.4962,
+        "draw": 0.2602,
+        "away_win": 0.2435
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31261",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Coventry",
+      "away_team": "Sunderland",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.325,
+        "draw": 0.2973,
+        "away_win": 0.3777
+      },
+      "predicted": "A",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31262",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Hull",
+      "away_team": "Ipswich",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.4677,
+        "draw": 0.2735,
+        "away_win": 0.2588
+      },
+      "predicted": "H",
+      "top_scoreline": "1-0",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31263",
+      "kickoff": "2026-10-31T15:00:00Z",
+      "home_team": "Man City",
+      "away_team": "Brighton",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.5995,
+        "draw": 0.2192,
+        "away_win": 0.1813
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
+    {
+      "fixture_id": "31260",
+      "kickoff": "2026-10-31T12:30:00Z",
+      "home_team": "Chelsea",
+      "away_team": "Man United",
+      "frozen_at": "2026-10-30T11:47:54Z",
+      "probabilities": {
+        "home_win": 0.4344,
+        "draw": 0.26,
+        "away_win": 0.3056
+      },
+      "predicted": "H",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    }
+  ]
 }
