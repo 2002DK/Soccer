@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T19:02:56Z",
+  "generated_at": "2026-10-31T11:21:07Z",
   "league": "epl",
   "season": "2026-27",
   "data_through": "2026-10-25",
@@ -1262,6 +1262,132 @@
             0.0012,
             0.0003,
             0.0001
+          ]
+        ]
+      }
+    },
+    {
+      "id": "31273",
+      "kickoff": "2026-11-06T20:00:00Z",
+      "home_team": "Everton",
+      "away_team": "Coventry",
+      "probabilities": {
+        "home_win": 0.5461,
+        "draw": 0.2634,
+        "away_win": 0.1905
+      },
+      "prediction": "H",
+      "why": [
+        {
+          "driver": "strength",
+          "label": "Team strength (Elo)",
+          "detail": "Everton 1484 v Coventry 1395",
+          "effect": {
+            "home_win": 0.0864,
+            "draw": -0.0076,
+            "away_win": -0.0788
+          },
+          "points": 8.6
+        },
+        {
+          "driver": "goals",
+          "label": "Attack and defence ratings",
+          "detail": "expected goals Everton 1.5 v Coventry 0.7",
+          "effect": {
+            "home_win": 0.0334,
+            "draw": 0.0018,
+            "away_win": -0.0351
+          },
+          "points": 3.3
+        },
+        {
+          "driver": "league",
+          "label": "League home advantage lately",
+          "detail": "home teams won 41% of the last 380 league matches",
+          "effect": {
+            "home_win": -0.0057,
+            "draw": 0.0028,
+            "away_win": 0.0029
+          },
+          "points": -0.6
+        }
+      ],
+      "elo": {
+        "home": 1483.8,
+        "away": 1394.9
+      },
+      "scorelines": {
+        "expected_goals": {
+          "home": 1.5,
+          "away": 0.72
+        },
+        "scorelines": [
+          {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1536
+          },
+          {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1274
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "probability": 0.1227
+          }
+        ],
+        "over_2_5": 0.3808,
+        "both_teams_score": 0.4069,
+        "grid": [
+          [
+            0.1196,
+            0.0679,
+            0.028,
+            0.0067,
+            0.0012,
+            0.0002
+          ],
+          [
+            0.1536,
+            0.1274,
+            0.0419,
+            0.01,
+            0.0018,
+            0.0003
+          ],
+          [
+            0.1227,
+            0.0877,
+            0.0314,
+            0.0075,
+            0.0013,
+            0.0002
+          ],
+          [
+            0.0613,
+            0.0438,
+            0.0157,
+            0.0037,
+            0.0007,
+            0.0001
+          ],
+          [
+            0.023,
+            0.0164,
+            0.0059,
+            0.0014,
+            0.0002,
+            0.0
+          ],
+          [
+            0.0069,
+            0.0049,
+            0.0018,
+            0.0004,
+            0.0001,
+            0.0
           ]
         ]
       }

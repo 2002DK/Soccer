@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-30T11:47:54Z",
+  "generated_at": "2026-10-31T11:21:22Z",
   "league": "epl",
   "tracking_since": "2026-10-30T11:47:54Z",
-  "frozen": 8,
+  "frozen": 9,
   "scored": 0,
-  "awaiting_result": 8,
+  "awaiting_result": 9,
   "missed": 0,
   "model": {
     "accuracy": null,
@@ -23,6 +23,23 @@
   },
   "by_week": [],
   "matches": [
+    {
+      "fixture_id": "31268",
+      "kickoff": "2026-11-01T16:30:00Z",
+      "home_team": "Liverpool",
+      "away_team": "Arsenal",
+      "frozen_at": "2026-10-31T11:21:22Z",
+      "probabilities": {
+        "home_win": 0.3318,
+        "draw": 0.2579,
+        "away_win": 0.4104
+      },
+      "predicted": "A",
+      "top_scoreline": "1-1",
+      "result": null,
+      "score": null,
+      "correct": null
+    },
     {
       "fixture_id": "31267",
       "kickoff": "2026-10-31T20:00:00Z",
